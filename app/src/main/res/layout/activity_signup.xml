@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="160dp"
+        android:layout_height="90dp"
+        android:src="@drawable/title"
+        android:tint="@android:color/white"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/fullname_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/inputs_background"
+        android:padding="10dp"
+        android:layout_below="@+id/logo"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        android:inputType="text|textCapWords"
+        android:hint="Имя"/>
+
+    <EditText
+        android:id="@+id/username_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/inputs_background"
+        android:padding="10dp"
+        android:layout_below="@+id/fullname_signup"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        android:inputType="text"
+        android:hint="Никнейм"/>
+
+
+    <EditText
+        android:id="@+id/email_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/inputs_background"
+        android:padding="10dp"
+        android:layout_below="@+id/username_signup"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        android:inputType="textEmailAddress"
+        android:hint="Эл. почта"/>
+
+
+    <EditText
+        android:id="@+id/password_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/inputs_background"
+        android:padding="10dp"
+        android:layout_below="@+id/email_signup"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        android:inputType="textPassword"
+        android:hint="Пароль"/>
+
+    <Button
+        android:id="@+id/signup_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password_signup"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        android:background="@android:color/white"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Создать аккаунт"
+        android:textAllCaps="false"
+        android:textSize="17sp"
+        android:textColor="@android:color/black"/>
+
+    <Button
+        android:id="@+id/privacy_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_above="@id/signin_link_btn"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:text="Политика конфиденциальности"
+        android:textColor="@android:color/white"
+        android:autoLink="web"/>
+
+    <Button
+        android:id="@+id/signin_link_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Уже есть аккаунт? Войти"
+        android:textAllCaps="false"
+        android:textSize="17sp"
+        android:textColor="@android:color/white"/>
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="goods_types">
+        <item>Съедобное</item>
+        <item>Несъедобное</item>
+    </string-array>
+</resources>

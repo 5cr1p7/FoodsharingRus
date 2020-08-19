@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="195dp"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
+
+    <ImageView
+        android:id="@+id/post_image_home"
+        android:layout_width="195dp"
+        android:layout_height="210dp"
+        android:src="@drawable/profile"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/post_title_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
+        android:layout_marginStart="7dp"
+        android:fontFamily="@font/roboto_light"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        tools:text="Hello" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="255dp"
+        android:layout_marginStart="7dp">
+
+        <TextView
+            android:id="@+id/post_location_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:text="Москва"
+            tools:text="Москва" />
+
+        <TextView
+            android:id="@+id/offer_time_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/post_location_home"
+            android:textSize="18sp"
+            tools:text="20 апреля 12:45"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cities">
+        <item>Москва</item>
+        <item>Москва и Московская обл.</item>
+        <item>Санкт-Петербург</item>
+        <item>Ленинградская обл.</item>
+        <item>Белгородская обл.</item>
+        <item>Брянская обл.</item>
+        <item>Бурятия</item>
+        <item>Владимирская обл.</item>
+        <item>Вологодская обл.</item>
+        <item>Мурманская обл.</item>
+        <item>Татарстан</item>
+        <item>Тюменская обл.</item>
+        <item>Татарстан</item>
+        <item>Татарстан</item>
+    </string-array>
+</resources>

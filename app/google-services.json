@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "933040542866",
+    "firebase_url": "https://foodsharingrus-532c9.firebaseio.com",
+    "project_id": "foodsharingrus-532c9",
+    "storage_bucket": "foodsharingrus-532c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933040542866:android:5582110d611196e021024b",
+        "android_client_info": {
+          "package_name": "com.foodkapev.foodsharingrus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "933040542866-istg0gh30gaj0ka0a9f19jdl49c1l1ca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfBgC7aNRufOx6dFY7vV2e3-sqROVMmFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933040542866-istg0gh30gaj0ka0a9f19jdl49c1l1ca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
