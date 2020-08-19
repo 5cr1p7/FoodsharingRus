@@ -26,7 +26,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         privacy_btn.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://raw.githubusercontent.com/5cr1p7/Foodsharing_Russia/master/README.md"))
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://raw.githubusercontent.com/5cr1p7/FoodsharingRus/master/PrivacyPolicy"))
             startActivity(browserIntent)
         }
     }
