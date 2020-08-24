@@ -23,7 +23,7 @@ class ImagesAdapter(private val mContext: Context, private val mPost: List<Post>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.images_item_layout, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.post_item_layout, parent, false)
         return ViewHolder(view)
     }
 

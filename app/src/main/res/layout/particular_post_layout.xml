@@ -2,174 +2,170 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:layout_marginTop="5dp">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:layout_width="match_parent"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_image_post_details"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="5dp"
+            android:src="@drawable/profile" />
+
+        <TextView
+            android:id="@+id/user_name_post_details"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/user_profile_image_post_details"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/post_image_home_details"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Username"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_profile_image_post_details"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:src="@drawable/profile"
-                android:padding="5dp"
-                />
-
-            <TextView
-                android:id="@+id/user_name_post_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="14dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Username"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/post_image_home_details"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:src="@drawable/profile"
+            app:layout_constraintTop_toBottomOf="@id/user_profile_image_post_details"
             android:scaleType="centerCrop"
-            android:layout_below="@id/linear1"/>
+            android:src="@drawable/profile" />
 
-        <RelativeLayout
-            android:id="@+id/post_relative_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+        <ImageView
+            android:id="@+id/post_image_like_btn_details"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post_image_home_details"
+            android:src="@drawable/baseline_favorite_border_black_48" />
+
+        <ImageView
+            android:id="@+id/post_image_comment_btn_details"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/post_image_home_details">
-
-            <ImageView
-                android:id="@+id/post_image_like_btn_details"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/baseline_favorite_border_black_48"
-                />
-
-            <ImageView
-                android:id="@+id/post_image_comment_btn_details"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_toEndOf="@+id/post_image_like_btn_details"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="2dp"
-                android:src="@drawable/outline_mode_comment_black_48"
-                />
-
-        </RelativeLayout>
+            app:layout_constraintStart_toEndOf="@id/post_image_like_btn_details"
+            app:layout_constraintTop_toBottomOf="@id/post_image_home_details"
+            android:src="@drawable/outline_mode_comment_black_48" />
 
 
-<!--        <TextView-->
-<!--            android:id="@+id/publisher"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textSize="15sp"-->
-<!--            android:textColor="@color/colorPrimaryDark"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/publisher"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="10dp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:textSize="15sp"-->
+        <!--            android:textColor="@color/colorPrimaryDark"/>-->
 
         <TextView
             android:id="@+id/title_post_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_below="@+id/post_relative_details"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/post_image_like_btn_details"
+            app:layout_constraintTop_toBottomOf="@id/post_image_like_btn_details"
             android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp"
-            android:textColor="@color/colorPrimaryDark"/>
+            tools:text="Блины"/>
 
         <TextView
             android:id="@+id/description"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/title_post_details"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/title_post_details"
+            app:layout_constraintTop_toBottomOf="@id/title_post_details"
             android:fontFamily="@font/roboto_light"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp"
-            android:textColor="@color/colorPrimaryDark"/>
+            tools:text="Свежие"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/comments"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:textSize="16sp"-->
-<!--            android:text=""-->
-<!--            android:textColor="@color/colorPrimaryDark"/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/comments"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="10dp"-->
+        <!--            android:layout_marginTop="5dp"-->
+        <!--            android:layout_marginBottom="5dp"-->
+        <!--            android:textSize="16sp"-->
+        <!--            android:text=""-->
+        <!--            android:textColor="@color/colorPrimaryDark"/>-->
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recycler_view_comments_post_details"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_below="@id/description"-->
-<!--            android:layout_marginStart="5dp"-->
-<!--            android:layout_marginEnd="5dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:layout_above="@id/comments_relative">-->
-<!--        </androidx.recyclerview.widget.RecyclerView>-->
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/recycler_view_comments_post_details"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_below="@id/description"-->
+        <!--            android:layout_marginStart="5dp"-->
+        <!--            android:layout_marginEnd="5dp"-->
+        <!--            android:layout_marginBottom="5dp"-->
+        <!--            android:layout_marginTop="15dp"-->
+        <!--            android:layout_above="@id/comments_relative">-->
+        <!--        </androidx.recyclerview.widget.RecyclerView>-->
 
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/comments_relative"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:background="#fff">-->
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/comments_relative"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_alignParentBottom="true"-->
+        <!--            android:background="#fff">-->
 
-<!--            <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                android:id="@+id/profile_image_comments_post_details"-->
-<!--                android:layout_width="40dp"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:src="@drawable/profile"-->
-<!--                android:padding="4dp"-->
-<!--                android:layout_marginStart="4dp"/>-->
+        <!--            <de.hdodenhof.circleimageview.CircleImageView-->
+        <!--                android:id="@+id/profile_image_comments_post_details"-->
+        <!--                android:layout_width="40dp"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:src="@drawable/profile"-->
+        <!--                android:padding="4dp"-->
+        <!--                android:layout_marginStart="4dp"/>-->
 
-<!--            <EditText-->
-<!--                android:id="@+id/add_comment_post_details"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_toStartOf="@id/post_comment"-->
-<!--                android:layout_toEndOf="@+id/profile_image_comments"-->
-<!--                android:hint="Write comment"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:layout_marginEnd="10dp"-->
-<!--                android:padding="8dp"/>-->
+        <!--            <EditText-->
+        <!--                android:id="@+id/add_comment_post_details"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_toStartOf="@id/post_comment"-->
+        <!--                android:layout_toEndOf="@+id/profile_image_comments"-->
+        <!--                android:hint="Write comment"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:layout_marginStart="10dp"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:padding="8dp"/>-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/post_comment"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="@color/colorPrimary"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="18sp"-->
-<!--                android:layout_alignParentEnd="true"-->
-<!--                android:layout_centerVertical="true"-->
-<!--                android:text="Publish"-->
-<!--                android:layout_marginEnd="6dp"/>-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/post_comment"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:textColor="@color/colorPrimary"-->
+        <!--                android:textStyle="bold"-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:layout_alignParentEnd="true"-->
+        <!--                android:layout_centerVertical="true"-->
+        <!--                android:text="Publish"-->
+        <!--                android:layout_marginEnd="6dp"/>-->
 
 
-<!--        </RelativeLayout>-->
+        <!--        </RelativeLayout>-->
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

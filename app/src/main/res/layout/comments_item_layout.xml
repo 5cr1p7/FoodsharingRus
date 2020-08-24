@@ -12,8 +12,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/profile"
-        android:padding="5dp"
-        />
+        android:padding="5dp" />
 
     <LinearLayout
         android:id="@+id/linear1"

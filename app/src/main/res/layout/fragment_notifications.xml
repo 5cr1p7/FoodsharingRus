@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout11"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.NotificationsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/app_bar_layout_notifications"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/notifications_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
             android:background="@android:color/white">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Уведомления"
-                    android:textSize="18sp"
                     android:fontFamily="@font/roboto_bold"
                     android:maxLines="1"
+                    android:text="Уведомления"
                     android:textColor="@android:color/black"
-                    android:layout_centerVertical="true"/>
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -44,10 +42,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_notifications"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:layout_below="@+id/app_bar_layout_notifications">
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_notifications">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
