@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="Username"
+        tools:text="Username"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/inputs_background"
-        android:text="Edit profile"
+        android:text="@string/profile_fragment_btn_edit_profile"
         android:textAllCaps="false"
         android:visibility="gone" />
 
@@ -93,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_fragment_username"
         android:fontFamily="@font/roboto_bold"
-        android:text="Имя"
+        tools:text="Имя"
         android:textColor="@android:color/black"
         android:textSize="13sp" />
 
@@ -105,7 +105,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/full_name_profile_fragment"
         android:fontFamily="@font/roboto_light"
-        android:text="О себе"
+        tools:text="О себе"
         android:textColor="@android:color/black"
         android:textSize="13sp" />
 
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toBottomOf="@id/view"
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/roboto_bold"
-        android:text="Предложения"
+        android:text="@string/profile_fragment_text_offers"
         android:textColor="@android:color/black"
         android:textSize="28sp" />
 

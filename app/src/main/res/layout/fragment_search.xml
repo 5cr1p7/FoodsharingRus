@@ -38,7 +38,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:hint="Поиск"
+                    android:hint="@string/search_fragment_hint_search"
                     android:inputType="textCapWords"
                     android:singleLine="true"
                     android:textColor="@color/colorPrimary"

@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.widget.Toast
 import com.foodkapev.foodsharingrus.Model.User
 import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -92,7 +91,7 @@ class AccountSettingsActivity : AppCompatActivity() {
 //                this, "Bio field is empty",
 //                Toast.LENGTH_SHORT).show()
             else -> {
-                val progressDialog: ProgressDialog = ProgressDialog(this)
+                val progressDialog = ProgressDialog(this)
                 progressDialog.setTitle("Сохранение изменений")
                 progressDialog.setMessage("Пожалуйста, подождите ...")
                 progressDialog.show()
@@ -110,7 +109,7 @@ class AccountSettingsActivity : AppCompatActivity() {
                         }
                     }
                     return@Continuation fileRef.downloadUrl
-                }).addOnCompleteListener ( OnCompleteListener<Uri> { task ->
+                }).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val downloadUrl = task.result
                         myUrl = downloadUrl.toString()
@@ -130,10 +129,9 @@ class AccountSettingsActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                         progressDialog.dismiss()
-                    }
-                    else
+                    } else
                         progressDialog.dismiss()
-                } )
+                }
             }
         }
 

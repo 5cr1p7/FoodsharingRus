@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="Все предложения"
+        android:text="@string/home_text_all_offers"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"

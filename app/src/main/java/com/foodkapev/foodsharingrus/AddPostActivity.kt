@@ -28,7 +28,6 @@ import java.util.*
 import java.util.jar.Manifest
 import kotlin.collections.HashMap
 
-
 class AddPostActivity : AppCompatActivity() {
     private var myUrl = ""
     private var imageUri: Uri? = null

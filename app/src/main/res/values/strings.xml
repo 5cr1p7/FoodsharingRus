@@ -3,4 +3,41 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="account_settings_text_image_change">Изменить</string>
+    <string name="account_settings_hint_name">Имя</string>
+    <string name="account_settings_hint_nickname">Никнейм</string>
+    <string name="account_settings_hint_about">О себе</string>
+    <string name="account_settings_btn_logout">Выйти</string>
+    <string name="account_settings_btn_delete_account">Удалить аккаунт</string>
+
+    <string name="add_post_hint_title">Название</string>
+    <string name="add_post_hint_description">Описание</string>
+    <string name="add_post_radio_edible">Съедобное</string>
+    <string name="add_post_radio_inedible">Несъедобное</string>
+    <string name="add_post_hint_location">Местоположение</string>
+    <string name="add_post_text_add_post">Добавить</string>
+
+    <string name="comments_text_titlebar">Сообщения</string>
+    <string name="comments_hint_send_msg">Ваше сообщение…</string>
+
+    <string name="login_hint_email">Эл. почта</string>
+    <string name="login_hint_password">Пароль</string>
+    <string name="login_btn_signin">Войти</string>
+    <string name="login_btn_signup">Еще нет аккаунта? Зарегистрироваться</string>
+    <string name="signup_hint_name">Имя</string>
+    <string name="signup_hint_nickname">Никнейм</string>
+    <string name="signup_hint_email">Эл. почта</string>
+    <string name="signup_hint_password">Пароль</string>
+    <string name="signup_btn_create_account">Создать аккаунт</string>
+    <string name="signup_btn_login">Уже есть аккаунт? Войти</string>
+    <string name="signup_btn_policy">Политика конфиденциальности</string>
+    <string name="home_text_all_offers">Все предложения</string>
+    <string name="notifications_toolbar_text_notifications">Уведомления</string>
+    <string name="post_details_toolbar_text_offer">Предложение</string>
+    <string name="profile_fragment_btn_edit_profile">Edit profile</string>
+    <string name="profile_fragment_text_offers">Предложения</string>
+    <string name="search_fragment_hint_search">Поиск</string>
+
+
 </resources>

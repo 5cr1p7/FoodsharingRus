@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
                 android:maxLines="1"
-                android:text="Сообщения"
+                android:text="@string/comments_text_titlebar"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -74,8 +74,7 @@
             android:id="@+id/add_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Ваше сообщение..."
-
+            android:hint="@string/comments_hint_send_msg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/post_comment"
             app:layout_constraintStart_toEndOf="@+id/profile_image_comments"

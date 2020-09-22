@@ -22,7 +22,7 @@
         app:layout_constraintStart_toEndOf="@id/notifications_profile_image"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="5dp"
-        tools:text="Васислий"
+        tools:text="Василий"
         android:fontFamily="@font/roboto_bold"
         android:textColor="@color/colorPrimary" />
 

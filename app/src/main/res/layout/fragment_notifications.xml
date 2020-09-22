@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
                     android:maxLines="1"
-                    android:text="Уведомления"
+                    android:text="@string/notifications_toolbar_text_notifications"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
