@@ -33,7 +33,7 @@ class ImagesAdapter(private val mContext: Context, private val mPost: List<Post>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post: Post = mPost[position]
-//        Picasso.get().load(post.getPostImage()).into(holder.postImage)
+
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage)
         holder.postTitle.text = post.getTitle()
 

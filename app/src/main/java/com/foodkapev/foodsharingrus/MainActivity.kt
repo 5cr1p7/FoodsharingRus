@@ -17,12 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val toolbar: Toolbar = findViewById(R.id.toolbar)
-//        setSupportActionBar(toolbar)
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        val appBarConfiguration = AppBarConfiguration(navController.graph)
-//        toolbar.setupWithNavController(navController, appBarConfiguration)
-
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         navView.selectedItemId = R.id.nav_home
@@ -57,11 +51,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun moveToFragment(fragment: Fragment) {
-        val fragmentTrans = supportFragmentManager.beginTransaction()
-        fragmentTrans.replace(R.id.fragment_container, fragment)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
-//        fragmentTrans.addToBackStack(null)
-//        fragmentTrans.commit()
     }
 }

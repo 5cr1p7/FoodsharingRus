@@ -92,8 +92,6 @@ class NotificationsAdapter(
 
         usersRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (context != null)
-//                    return
 
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
@@ -116,8 +114,6 @@ class NotificationsAdapter(
 
         postRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (context != null)
-//                    return
 
                 if (dataSnapshot.exists()) {
 

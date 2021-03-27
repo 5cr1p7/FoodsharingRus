@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.foodkapev.foodsharingrus.Adapter.CommentsAdapter
 import com.foodkapev.foodsharingrus.Model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -76,8 +77,6 @@ class CommentsActivity : AppCompatActivity() {
         val usersRef = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
         usersRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (context != null)
-//                    return
 
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
@@ -96,14 +95,10 @@ class CommentsActivity : AppCompatActivity() {
             .child(postId).child("postImage")
         postRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (context != null)
-//                    return
 
                 if (dataSnapshot.exists()) {
                     val image = dataSnapshot.value.toString()
-
-                    Picasso.get().load(image).placeholder(R.drawable.profile).into(post_image_comment)
-
+                    Glide.with(applicationContext).load(image).placeholder(R.drawable.profile).into(post_image_comment)
                 }
             }
 

@@ -43,8 +43,6 @@ class PostAdapter(private val mContext: Context,
 
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage)
 
-//        Picasso.get().load(post.getPostImage()).into(holder.postImage)
-
         holder.postImage.setOnClickListener {
             val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
             editor.putString("postId", post.getPostId())
@@ -53,36 +51,7 @@ class PostAdapter(private val mContext: Context,
                 .replace(R.id.fragment_container, PostDetailsFragment()).commit()
         }
 
-//        if (post.getDescription() == "") {
-//            holder.description.visibility = View.GONE
-//        }
-//        else {
-//            holder.description.visibility = View.VISIBLE
-//            holder.description.text = post.getDescription()
-//        }
 
-//        val types = arrayOf("Съедобное", "Несъедобное")
-//        if (holder.spinner != null) {
-//            val arrayAdapter = ArrayAdapter(mContext, android.R.layout.simple_spinner_item, types)
-//            holder.spinner.adapter = arrayAdapter
-//
-//            holder.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                override fun onNothingSelected(parent: AdapterView<*>?) {
-//                    TODO("Not yet implemented")
-//                }
-//
-//                override fun onItemSelected(
-//                    parent: AdapterView<*>,
-//                    view: View,
-//                    position: Int,
-//                    id: Long
-//                ) {
-//                    Toast.makeText(mContext, "asdasds" + " " + types[position], Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//
-//            }
-//        }
 
         holder.title.text = post.getTitle()
 
@@ -93,72 +62,7 @@ class PostAdapter(private val mContext: Context,
 
         holder.location.text = post.getLocation()
 
-//        if (holder.type.checkedRadioButtonId == R.id.edible_goods_type) {
-//            post.getType()
-//        }
-
         publisherInfo(post.getPublisher())
-
-//        isLikes(post.getPostId(), holder.likeBtn)
-//        numberOfLikes(holder.likes, post.getPostId())
-//        numberOfComments(holder.comments, post.getPostId())
-//        checkSavedStatus(post.getPostId(), holder.saveBtn)
-
-//        holder.likeBtn.setOnClickListener {
-//            if (holder.likeBtn.tag == "Like") {
-//                FirebaseDatabase.getInstance().reference.child("Likes")
-//                    .child(post.getPostId())
-//                    .child(firebaseUser!!.uid)
-//                    .setValue(true)
-//
-//                addNotification(post.getPublisher(), post.getPostId())
-//            }
-//            else {
-//                FirebaseDatabase.getInstance().reference.child("Likes")
-//                    .child(post.getPostId())
-//                    .child(firebaseUser!!.uid)
-//                    .removeValue()
-//
-//                val intent = Intent(mContext, MainActivity::class.java)
-//                mContext.startActivity(intent)
-//            }
-//        }
-
-//        holder.likes.setOnClickListener {
-//            val intent = Intent(mContext, ShowUsersActivity::class.java)
-//            intent.putExtra("id", post.getPostId())
-//            intent.putExtra("title", "Likes")
-//            mContext.startActivity(intent)
-//        }
-
-//        holder.commentBtn.setOnClickListener {
-//            val commentsIntent = Intent(mContext, CommentsActivity::class.java)
-//            commentsIntent.putExtra("postId", post.getPostId())
-//            commentsIntent.putExtra("publisherId", post.getPublisher())
-//            mContext.startActivity(commentsIntent)
-//        }
-
-//        holder.comments.setOnClickListener {
-//            val commentsIntent = Intent(mContext, CommentsActivity::class.java)
-//            commentsIntent.putExtra("postId", post.getPostId())
-//            commentsIntent.putExtra("publisherId", post.getPublisher())
-//            mContext.startActivity(commentsIntent)
-//        }
-
-//        holder.saveBtn.setOnClickListener {
-//            if (holder.saveBtn.tag == "Save") {
-//                FirebaseDatabase.getInstance().reference.child("Saves")
-//                    .child(firebaseUser!!.uid)
-//                    .child(post.getPostId())
-//                    .setValue(true)
-//            }
-//            else {
-//                FirebaseDatabase.getInstance().reference.child("Saves")
-//                    .child(firebaseUser!!.uid)
-//                    .child(post.getPostId())
-//                    .removeValue()
-//            }
-//        }
 
     }
 
@@ -224,22 +128,10 @@ class PostAdapter(private val mContext: Context,
     }
 
     inner class ViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
-
-//        var profileImage: CircleImageView = itemView.findViewById(R.id.user_profile_image_post)
         var postImage: ImageView = itemView.findViewById(R.id.post_image_home)
-//        var likeBtn: ImageView = itemView.findViewById(R.id.post_image_like_btn)
-//        var commentBtn: ImageView = itemView.findViewById(R.id.post_image_comment_btn)
-//        var saveBtn: ImageView = itemView.findViewById(R.id.post_save_comment_btn)
-//        var userName: TextView = itemView.findViewById(R.id.user_name_post)
-//        var publisher: TextView = itemView.findViewById(R.id.publisher)
-//        var likes: TextView = itemView.findViewById(R.id.likes)
-//        var description: TextView = itemView.findViewById(R.id.description_post_home)
-//        var comments: TextView = itemView.findViewById(R.id.comments)
         var title: TextView = itemView.findViewById(R.id.post_title_home)
         var time: TextView = itemView.findViewById(R.id.offer_time_home)
         var location: TextView = itemView.findViewById(R.id.post_location_home)
-//        var type: RadioGroup = itemView.findViewById(R.id.goods_type_rg)
-//        var profilePostTitle: TextView = itemView.findViewById(R.id.post_title)
     }
 
     private fun publisherInfo(

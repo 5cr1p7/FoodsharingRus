@@ -80,61 +80,8 @@ class HomeFragment : Fragment() {
 
         }
 
-//        checkFollowings()
-
         return view
     }
-
-//    private fun checkFollowings() {
-//        followingList = ArrayList()
-//
-//        val followingRef = FirebaseDatabase.getInstance().reference
-//            .child("Follow").child(FirebaseAuth.getInstance().currentUser!!.uid)
-//            .child("Following")
-//
-//        followingRef.addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    (followingList as ArrayList<String>).clear()
-//
-//                    for (snapshot in dataSnapshot.children) {
-//                        snapshot.key?.let { (followingList as ArrayList<String>).add(it) }
-//                    }
-//
-//                    retrievePosts()
-//                }
-//            }
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//        })
-//    }
-
-//    private fun currentUserPosts() {
-//        val postsRef = FirebaseDatabase.getInstance().reference
-//            .child("Posts")
-//
-//        postsRef.addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    (postList as ArrayList<Post>).clear()
-//
-//                    for (snapshot in dataSnapshot.children) {
-//                        val post = snapshot.getValue(Post::class.java)
-//                        (postList as ArrayList<Post>).add(post!!)
-//                        Collections.reverse(postList)
-//
-//                        postAdapter!!.notifyDataSetChanged()
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//        })
-//    }
 
     private fun retrieveAllPosts() {
         val postsRef = FirebaseDatabase.getInstance().reference

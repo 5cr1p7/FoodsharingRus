@@ -53,6 +53,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/post_image_home_details"
             android:src="@drawable/baseline_favorite_border_black_48" />
@@ -82,11 +83,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            app:layout_constraintStart_toStartOf="@id/post_image_like_btn_details"
-            app:layout_constraintTop_toBottomOf="@id/post_image_like_btn_details"
+            app:layout_constraintStart_toStartOf="@id/post_image_comment_btn_details"
+            app:layout_constraintTop_toBottomOf="@id/post_image_comment_btn_details"
             android:fontFamily="@font/roboto_bold"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="15sp"
+            android:textSize="16sp"
             tools:text="Блины"/>
 
         <TextView
@@ -97,7 +98,8 @@
             app:layout_constraintStart_toStartOf="@id/title_post_details"
             app:layout_constraintTop_toBottomOf="@id/title_post_details"
             android:fontFamily="@font/roboto_light"
-            android:textColor="@color/colorPrimaryDark"
+            android:maxLength="250"
+            android:textColor="@android:color/black"
             android:textSize="15sp"
             tools:text="Свежие"/>
 

@@ -42,7 +42,6 @@ class PostDetailsAdapter(private val mContext: Context,
 
         val post = mPost[position]
 
-//        Picasso.get().load(post.getPostImage()).into(holder.postImage)
         Glide.with(mContext).load(post.getPostImage()).into(holder.postImage)
 
         if (post.getDescription() == "") {
@@ -55,41 +54,7 @@ class PostDetailsAdapter(private val mContext: Context,
 
         holder.title.text = post.getTitle()
 
-//        holder.time.text = post.getTime()
-
         publisherInfo(holder.profileImage, holder.userName, post.getPublisher())
-
-//        isLikes(post.getPostId(), holder.likeBtn)
-//        numberOfLikes(holder.likes, post.getPostId())
-//        numberOfComments(holder.comments, post.getPostId())
-//        checkSavedStatus(post.getPostId(), holder.saveBtn)
-
-//        holder.likeBtn.setOnClickListener {
-//            if (holder.likeBtn.tag == "Like") {
-//                FirebaseDatabase.getInstance().reference.child("Likes")
-//                    .child(post.getPostId())
-//                    .child(firebaseUser!!.uid)
-//                    .setValue(true)
-//
-//                addNotification(post.getPublisher(), post.getPostId())
-//            }
-//            else {
-//                FirebaseDatabase.getInstance().reference.child("Likes")
-//                    .child(post.getPostId())
-//                    .child(firebaseUser!!.uid)
-//                    .removeValue()
-//
-//                val intent = Intent(mContext, MainActivity::class.java)
-//                mContext.startActivity(intent)
-//            }
-//        }
-
-//        holder.likes.setOnClickListener {
-//            val intent = Intent(mContext, ShowUsersActivity::class.java)
-//            intent.putExtra("id", post.getPostId())
-//            intent.putExtra("title", "Likes")
-//            mContext.startActivity(intent)
-//        }
 
         holder.commentBtn.setOnClickListener {
             val commentsIntent = Intent(mContext, CommentsActivity::class.java)
@@ -98,47 +63,8 @@ class PostDetailsAdapter(private val mContext: Context,
             mContext.startActivity(commentsIntent)
         }
 
-//        holder.comments.setOnClickListener {
-//            val commentsIntent = Intent(mContext, CommentsActivity::class.java)
-//            commentsIntent.putExtra("postId", post.getPostId())
-//            commentsIntent.putExtra("publisherId", post.getPublisher())
-//            mContext.startActivity(commentsIntent)
-//        }
-
-//        holder.saveBtn.setOnClickListener {
-//            if (holder.saveBtn.tag == "Save") {
-//                FirebaseDatabase.getInstance().reference.child("Saves")
-//                    .child(firebaseUser!!.uid)
-//                    .child(post.getPostId())
-//                    .setValue(true)
-//            }
-//            else {
-//                FirebaseDatabase.getInstance().reference.child("Saves")
-//                    .child(firebaseUser!!.uid)
-//                    .child(post.getPostId())
-//                    .removeValue()
-//            }
-//        }
-
     }
 
-//    private fun numberOfLikes(likes: TextView, postId: String) {
-//        val likesRef = FirebaseDatabase.getInstance().reference
-//            .child("Likes")
-//            .child(postId)
-//
-//        likesRef.addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    likes.text = dataSnapshot.childrenCount.toString() + " likes"
-//                }
-//            }
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//        })
-//    }
 
     private fun numberOfComments(comments: TextView, postId: String) {
         val commentsRef = FirebaseDatabase.getInstance().reference
@@ -158,47 +84,13 @@ class PostDetailsAdapter(private val mContext: Context,
         })
     }
 
-//    private fun isLikes(postId: String, likeBtn: ImageView) {
-//        val firebaseUser = FirebaseAuth.getInstance().currentUser
-//
-//        val likesRef = FirebaseDatabase.getInstance().reference
-//            .child("Likes")
-//            .child(postId)
-//
-//        likesRef.addValueEventListener(object: ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                if (dataSnapshot.child(firebaseUser!!.uid).exists()) {
-//                    likeBtn.setImageResource(R.drawable.heart_clicked)
-//                    likeBtn.tag = "Liked"
-//                }
-//                else {
-//                    likeBtn.setImageResource(R.drawable.heart)
-//                    likeBtn.tag = "Like"
-//                }
-//            }
-//
-//            override fun onCancelled(p0: DatabaseError) {
-//
-//            }
-//        })
-//    }
-
     inner class ViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
-
         var profileImage: CircleImageView = itemView.findViewById(R.id.user_profile_image_post_details)
         var postImage: ImageView = itemView.findViewById(R.id.post_image_home_details)
-//        var likeBtn: ImageView = itemView.findViewById(R.id.post_image_like_btn_details)
         var commentBtn: ImageView = itemView.findViewById(R.id.post_image_comment_btn_details)
-//        var saveBtn: ImageView = itemView.findViewById(R.id.post_save_comment_btn)
         var userName: TextView = itemView.findViewById(R.id.user_name_post_details)
-//        var publisher: TextView = itemView.findViewById(R.id.publisher)
-//        var likes: TextView = itemView.findViewById(R.id.likes)
         var description: TextView = itemView.findViewById(R.id.description)
-//        var comments: TextView = itemView.findViewById(R.id.comments)
         var title: TextView = itemView.findViewById(R.id.title_post_details)
-//        var location: TextView = itemView.findViewById(R.id.title_post_details)
-//        var time: TextView = itemView.findViewById(R.id.offer_time_home)
-//        var profilePostTitle: TextView = itemView.findViewById(R.id.post_title)
     }
 
     private fun publisherInfo(

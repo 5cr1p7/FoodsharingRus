@@ -6,11 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.foodkapev.foodsharingrus.Model.City
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -23,9 +25,12 @@ import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
 import kotlinx.android.synthetic.main.activity_add_post.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.jar.Manifest
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class AddPostActivity : AppCompatActivity() {
@@ -43,20 +48,16 @@ class AddPostActivity : AppCompatActivity() {
 
         close_add_post_btn.setOnClickListener { onBackPressed() }
 
-//        CropImage.activity().setAspectRatio(2, 1).start(this)
-//        Matisse.from(this)
-
         image_post.setOnClickListener {
             CropImage.activity().start(this)
-//            CropImage.activity(imageUri).start(this)
-//            startActivityForResult(getPickImageChooserIntent(this), 200)
         }
 
-//        val gson = Gson()
-//        val region = gson.fromJson<String>("region", )
-
+//        val json = assets.open("cities.json").bufferedReader().readText()
+//        val cities = Json.decodeFromString<City>(json)
+//        val citiesArray: Array<String> = arrayOf(cities.city)
+//        Log.d("asdas", citiesArray[0])
         val cities = resources.getStringArray(R.array.cities)
-        val adapter = ArrayAdapter<String>(
+        val adapter = ArrayAdapter(
             this, android.R.layout.simple_dropdown_item_1line, cities)
         city_picker_list.setAdapter(adapter)
     }
