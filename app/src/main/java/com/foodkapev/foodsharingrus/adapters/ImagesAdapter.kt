@@ -1,18 +1,21 @@
-package com.foodkapev.foodsharingrus.Adapter
+package com.foodkapev.foodsharingrus.adapters
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.Model.Post
+import com.foodkapev.foodsharingrus.data.Post
 import com.foodkapev.foodsharingrus.R
-import com.foodkapev.foodsharingrus.Fragments.PostDetailsFragment
+import com.foodkapev.foodsharingrus.fragments.PostDetailsFragment
 
 class ImagesAdapter(private val mContext: Context, private val mPost: List<Post>)
     : RecyclerView.Adapter<ImagesAdapter.ViewHolder?>() {
@@ -34,15 +37,15 @@ class ImagesAdapter(private val mContext: Context, private val mPost: List<Post>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post: Post = mPost[position]
 
-        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage)
-        holder.postTitle.text = post.getTitle()
+        Glide.with(mContext).load(post.postImage).into(holder.postImage)
+        holder.postTitle.text = post.title
+
+        Navigation.createNavigateOnClickListener(R.id.action_profileFragment_to_postDetailsFragment)
 
         holder.postImage.setOnClickListener {
-            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-            editor.putString("postId", post.getPostId())
-            editor.apply()
-            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, PostDetailsFragment()).commit()
+            val bundle = Bundle()
+            bundle.putString("postId", post.postId)
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_profileFragment_to_postDetailsFragment, bundle)
         }
     }
 

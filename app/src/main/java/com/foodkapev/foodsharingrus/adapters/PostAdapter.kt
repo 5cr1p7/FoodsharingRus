@@ -1,17 +1,17 @@
-package com.foodkapev.foodsharingrus.Adapter
+package com.foodkapev.foodsharingrus.adapters
+
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.NonNull
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.CommentsActivity
-import com.foodkapev.foodsharingrus.Model.Post
-import com.foodkapev.foodsharingrus.Model.User
+import com.foodkapev.foodsharingrus.fragments.PostDetailsFragment
+import com.foodkapev.foodsharingrus.data.Post
+import com.foodkapev.foodsharingrus.data.User
 import com.foodkapev.foodsharingrus.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -19,17 +19,16 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
+import kotlin.collections.HashMap
 
-class PostDetailsAdapter(private val mContext: Context,
-                         private val mPost: List<Post>): RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
+class PostAdapter(private val mContext: Context,
+                  private val mPost: List<Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
 
     private var firebaseUser: FirebaseUser? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext)
-            .inflate(R.layout.particular_post_layout, parent, false)
+            .inflate(R.layout.posts_layout, parent, false)
         return ViewHolder(view)
     }
 
@@ -42,29 +41,48 @@ class PostDetailsAdapter(private val mContext: Context,
 
         val post = mPost[position]
 
-        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage)
+        Glide.with(mContext).load(post.postImage).into(holder.postImage)
 
-        if (post.getDescription() == "") {
-            holder.description.visibility = View.GONE
+        holder.postImage.setOnClickListener {
+            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
+            editor.putString("postId", post.postId)
+            editor.apply()
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, PostDetailsFragment()).commit()
         }
-        else {
-            holder.description.visibility = View.VISIBLE
-            holder.description.text = post.getDescription()
-        }
 
-        holder.title.text = post.getTitle()
 
-        publisherInfo(holder.profileImage, holder.userName, post.getPublisher())
 
-        holder.commentBtn.setOnClickListener {
-            val commentsIntent = Intent(mContext, CommentsActivity::class.java)
-            commentsIntent.putExtra("postId", post.getPostId())
-            commentsIntent.putExtra("publisherId", post.getPublisher())
-            mContext.startActivity(commentsIntent)
-        }
+        holder.title.text = post.title
+
+        if (post.time != "")
+            holder.time.text = post.time
+        else
+            holder.time.text = ""
+
+        holder.location.text = post.location
+
+        publisherInfo(post.publisher)
 
     }
 
+    private fun numberOfLikes(likes: TextView, postId: String) {
+        val likesRef = FirebaseDatabase.getInstance().reference
+            .child("Likes")
+            .child(postId)
+
+        likesRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    likes.text = dataSnapshot.childrenCount.toString() + " likes"
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
+    }
 
     private fun numberOfComments(comments: TextView, postId: String) {
         val commentsRef = FirebaseDatabase.getInstance().reference
@@ -74,7 +92,32 @@ class PostDetailsAdapter(private val mContext: Context,
         commentsRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    comments.text = "Посмотреть все " + dataSnapshot.childrenCount.toString() + " комментариев"
+                    comments.text = "View all " + dataSnapshot.childrenCount.toString() + " comments"
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
+    }
+
+    private fun isLikes(postId: String, likeBtn: ImageView) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        val likesRef = FirebaseDatabase.getInstance().reference
+            .child("Likes")
+            .child(postId)
+
+        likesRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.child(firebaseUser!!.uid).exists()) {
+                    likeBtn.setImageResource(R.drawable.heart_clicked)
+                    likeBtn.tag = "Liked"
+                }
+                else {
+                    likeBtn.setImageResource(R.drawable.heart)
+                    likeBtn.tag = "Like"
                 }
             }
 
@@ -85,17 +128,13 @@ class PostDetailsAdapter(private val mContext: Context,
     }
 
     inner class ViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
-        var profileImage: CircleImageView = itemView.findViewById(R.id.user_profile_image_post_details)
-        var postImage: ImageView = itemView.findViewById(R.id.post_image_home_details)
-        var commentBtn: ImageView = itemView.findViewById(R.id.post_image_comment_btn_details)
-        var userName: TextView = itemView.findViewById(R.id.user_name_post_details)
-        var description: TextView = itemView.findViewById(R.id.description)
-        var title: TextView = itemView.findViewById(R.id.title_post_details)
+        var postImage: ImageView = itemView.findViewById(R.id.post_image_home)
+        var title: TextView = itemView.findViewById(R.id.post_title_home)
+        var time: TextView = itemView.findViewById(R.id.offer_time_home)
+        var location: TextView = itemView.findViewById(R.id.post_location_home)
     }
 
     private fun publisherInfo(
-        profileImage: CircleImageView,
-        userName: TextView,
         publisherId: String
     ) {
         val usersRef = FirebaseDatabase.getInstance().reference
@@ -107,8 +146,8 @@ class PostDetailsAdapter(private val mContext: Context,
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
 
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(profileImage)
-                    userName.text = user.getUsername()
+//                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(profileImage)
+//                    userName.text = user.getUsername()
 //                    publisher.text = user.getFullname()
 
                 }

@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.Adapter
+package com.foodkapev.foodsharingrus.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import com.foodkapev.foodsharingrus.Model.Comment
-import com.foodkapev.foodsharingrus.Model.User
+import com.foodkapev.foodsharingrus.data.Comment
+import com.foodkapev.foodsharingrus.data.User
 import com.foodkapev.foodsharingrus.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -38,9 +38,9 @@ class CommentsAdapter (private val mContext: Context,
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
         val comment = mComment!![position]
-        holder.commentTextView.text = comment.getComment()
+        holder.commentTextView.text = comment.comment
 
-        getUserInfo(holder.imageProfile, holder.userNameTextView, comment.getPublisher())
+        getUserInfo(holder.imageProfile, holder.userNameTextView, comment.publisher)
     }
 
     private fun getUserInfo(
@@ -56,8 +56,8 @@ class CommentsAdapter (private val mContext: Context,
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(imageProfile)
-                    userNameTextView.text = user.getUsername()
+                    Picasso.get().load(user?.image).placeholder(R.drawable.profile).into(imageProfile)
+                    userNameTextView.text = user?.username
                 }
             }
 

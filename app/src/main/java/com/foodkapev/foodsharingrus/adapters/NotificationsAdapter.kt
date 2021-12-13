@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.Adapter
+package com.foodkapev.foodsharingrus.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,11 +9,11 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.foodkapev.foodsharingrus.Fragments.PostDetailsFragment
-import com.foodkapev.foodsharingrus.Fragments.ProfileFragment
-import com.foodkapev.foodsharingrus.Model.Notification
-import com.foodkapev.foodsharingrus.Model.Post
-import com.foodkapev.foodsharingrus.Model.User
+import com.foodkapev.foodsharingrus.fragments.PostDetailsFragment
+import com.foodkapev.foodsharingrus.fragments.ProfileFragment
+import com.foodkapev.foodsharingrus.data.Notification
+import com.foodkapev.foodsharingrus.data.Post
+import com.foodkapev.foodsharingrus.data.User
 import com.foodkapev.foodsharingrus.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -49,19 +49,19 @@ class NotificationsAdapter(
         val notification = mNotification[position]
 
         when {
-            notification.getText() == "started following you" -> holder.text.text =
+            notification.text == "started following you" -> holder.text.text =
                 "started following you"
-            notification.getText() == "liked your post" -> holder.text.text = "liked your post"
-            notification.getText().contains("liked your post") -> holder.text.text =
-                notification.getText().replace("commented:", "Комментарий: ")
-            else -> holder.text.text = notification.getText()
+            notification.text == "liked your post" -> holder.text.text = "liked your post"
+            notification.text.contains("liked your post") -> holder.text.text =
+                notification.text.replace("commented:", "Комментарий: ")
+            else -> holder.text.text = notification.text
         }
 
         holder.itemView.setOnClickListener {
-            if (notification.getIsPost()) {
+            if (notification.isPost) {
                 val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
 
-                editor.putString("postId", notification.getPostId())
+                editor.putString("postId", notification.postId)
                 editor.apply()
 
                 (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
@@ -69,18 +69,18 @@ class NotificationsAdapter(
             } else {
                 val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
 
-                editor.putString("profileId", notification.getUserId())
+                editor.putString("profileId", notification.userId)
                 editor.apply()
 
                 (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, ProfileFragment()).commit()
             }
         }
-        userInfo(holder.profileImage, holder.userName, notification.getUserId())
+        userInfo(holder.profileImage, holder.userName, notification.userId)
 
-        if (notification.getIsPost()) {
+        if (notification.isPost) {
             holder.postImage.visibility = View.VISIBLE
-            getPostImage(holder.postImage, notification.getPostId())
+            getPostImage(holder.postImage, notification.postId)
         } else
             holder.postImage.visibility = View.GONE
 
@@ -96,9 +96,9 @@ class NotificationsAdapter(
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
 
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile)
+                    Picasso.get().load(user!!.image).placeholder(R.drawable.profile)
                         .into(imageView)
-                    userName.text = user.getUsername()
+                    userName.text = user.username
                 }
             }
 
@@ -119,7 +119,7 @@ class NotificationsAdapter(
 
                     val post = dataSnapshot.getValue(Post::class.java)
 
-                    Picasso.get().load(post!!.getPostImage()).placeholder(R.drawable.profile)
+                    Picasso.get().load(post!!.postImage).placeholder(R.drawable.profile)
                         .into(imageView)
                 }
             }

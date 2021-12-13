@@ -1,49 +1,60 @@
 package com.foodkapev.foodsharingrus
 
-import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.foodkapev.foodsharingrus.Fragments.HomeFragment
-import com.foodkapev.foodsharingrus.Fragments.NotificationsFragment
-import com.foodkapev.foodsharingrus.Fragments.ProfileFragment
-import com.foodkapev.foodsharingrus.Fragments.SearchFragment
+import androidx.navigation.fragment.NavHostFragment
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.foodkapev.foodsharingrus.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
+    private val binding by viewBinding(ActivityMainBinding::bind, R.id.container)
+
+    lateinit var navHostFragment: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val view = binding.root
+        setContentView(view)
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        navView.selectedItemId = R.id.nav_home
-        moveToFragment(HomeFragment())
+//        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//        val navController = navHostFragment.navController
+//        binding.bottomNavView.setupWithNavController(navController)
+
+
+        binding.bottomNavView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+//        binding.bottomNavView.selectedItemId = R.id.nav_home
+//        moveToFragment(HomeFragment())
     }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
         when(item.itemId) {
             R.id.nav_search -> {
-                moveToFragment(SearchFragment())
+                navController.navigate(R.id.searchFragment)
+//                moveToFragment(SearchFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_add_post -> {
                 item.isChecked = false
-                startActivity(Intent(this, AddPostActivity::class.java))
+//                startActivity(Intent(this, AddPostActivity::class.java))
+                navController.navigate(R.id.addPostActivity)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_home -> {
-                moveToFragment(HomeFragment())
+                navController.navigate(R.id.homeFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications -> {
-                moveToFragment(NotificationsFragment())
+                navController.navigate(R.id.notificationsFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile -> {
-                moveToFragment(ProfileFragment())
+//                moveToFragment(ProfileFragment())
+                navController.navigate(R.id.profileFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }

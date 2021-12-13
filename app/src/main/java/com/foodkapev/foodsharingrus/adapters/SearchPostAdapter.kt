@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.Adapter
+package com.foodkapev.foodsharingrus.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -11,13 +11,12 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.Fragments.PostDetailsFragment
+import com.foodkapev.foodsharingrus.fragments.PostDetailsFragment
 import com.foodkapev.foodsharingrus.MainActivity
-import com.foodkapev.foodsharingrus.Model.Post
+import com.foodkapev.foodsharingrus.data.Post
 import com.foodkapev.foodsharingrus.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.squareup.picasso.Picasso
 
 class SearchPostAdapter(private var mContext: Context,
                         private var mUser: List<Post>,
@@ -34,16 +33,16 @@ class SearchPostAdapter(private var mContext: Context,
 
     override fun onBindViewHolder(holder: SearchPostAdapter.ViewHolder, position: Int) {
         val post = mUser[position]
-        holder.title.text = post.getTitle()
-        holder.time.text = post.getTime()
-        holder.location.text = post.getLocation()
+        holder.title.text = post.title
+        holder.time.text = post.time
+        holder.location.text = post.location
 
-        Glide.with(mContext).load(post.getPostImage()).into(holder.postImage)
+        Glide.with(mContext).load(post.postImage).into(holder.postImage)
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             if (isFragment) {
                 val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-                pref.putString("postId", post.getPostId())
+                pref.putString("postId", post.postId)
                 pref.apply()
 
                 (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
@@ -51,7 +50,7 @@ class SearchPostAdapter(private var mContext: Context,
             }
             else {
                 val intent = Intent(mContext, MainActivity::class.java)
-                intent.putExtra("publisherId", post.getPostId())
+                intent.putExtra("publisherId", post.postId)
                 mContext.startActivity(intent)
             }
         })
