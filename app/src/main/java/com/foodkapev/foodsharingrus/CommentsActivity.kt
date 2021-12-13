@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.Adapter.CommentsAdapter
-import com.foodkapev.foodsharingrus.Model.User
+import com.foodkapev.foodsharingrus.adapters.CommentsAdapter
+import com.foodkapev.foodsharingrus.data.User
+import com.foodkapev.foodsharingrus.databinding.ActivityCommentsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -15,7 +17,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_comments.*
 
 class CommentsActivity : AppCompatActivity() {
 
@@ -23,7 +24,8 @@ class CommentsActivity : AppCompatActivity() {
     private var publisherId = ""
     private var firebaseUser: FirebaseUser? = null
     private var commentsAdapter: CommentsAdapter? = null
-    private var commentList: MutableList<com.foodkapev.foodsharingrus.Model.Comment>? = null
+    private var commentList: MutableList<com.foodkapev.foodsharingrus.data.Comment>? = null
+    private val binding by viewBinding(ActivityCommentsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +37,7 @@ class CommentsActivity : AppCompatActivity() {
 
         firebaseUser = FirebaseAuth.getInstance().currentUser
 
-        var recyclerView: RecyclerView = findViewById(R.id.recycler_view_comments)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_comments)
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.reverseLayout = true
@@ -49,8 +51,8 @@ class CommentsActivity : AppCompatActivity() {
         readComments()
         getPostImage()
 
-        post_comment.setOnClickListener {
-            if (add_comment.text.toString() == "")
+        binding.postComment.setOnClickListener {
+            if (binding.addComment.text.toString() == "")
                 Toast.makeText(this, "Сперва напишите сообщение!", Toast.LENGTH_SHORT).show()
             else
                 addComment()
@@ -63,14 +65,14 @@ class CommentsActivity : AppCompatActivity() {
             .child(postId)
 
         val commentsMap =  HashMap<String, Any>()
-        commentsMap["comment"] = add_comment.text.toString()
+        commentsMap["comment"] = binding.addComment.text.toString()
         commentsMap["publisher"] = firebaseUser!!.uid
 
         commentsRef.push().setValue(commentsMap)
 
         addNotification()
 
-        add_comment.text.clear()
+        binding.addComment.text.clear()
     }
 
     private fun commentsUserInfo() {
@@ -80,7 +82,7 @@ class CommentsActivity : AppCompatActivity() {
 
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(profile_image_comments)
+                    Picasso.get().load(user!!.image).placeholder(R.drawable.profile).into(binding.profileImageComments)
                 }
             }
 
@@ -98,7 +100,7 @@ class CommentsActivity : AppCompatActivity() {
 
                 if (dataSnapshot.exists()) {
                     val image = dataSnapshot.value.toString()
-                    Glide.with(applicationContext).load(image).placeholder(R.drawable.profile).into(post_image_comment)
+                    Glide.with(applicationContext).load(image).placeholder(R.drawable.profile).into(binding.postImageComment)
                 }
             }
 
@@ -118,7 +120,7 @@ class CommentsActivity : AppCompatActivity() {
                 if (dataSnapshot.exists())
                     commentList!!.clear()
                 for (snapshot in dataSnapshot.children) {
-                    val comment = snapshot.getValue(com.foodkapev.foodsharingrus.Model.Comment::class.java)
+                    val comment = snapshot.getValue(com.foodkapev.foodsharingrus.data.Comment::class.java)
                     commentList!!.add(comment!!)
                 }
                 commentList!!.reverse()
@@ -139,7 +141,7 @@ class CommentsActivity : AppCompatActivity() {
 
         val notificationsMap = HashMap<String, Any>()
         notificationsMap["userId"] = firebaseUser!!.uid
-        notificationsMap["text"] = "комментарий: ${add_comment.text}"
+        notificationsMap["text"] = "комментарий: ${binding.addComment.text}"
         notificationsMap["postId"] = postId
         notificationsMap["isPost"] = true
 

@@ -3,16 +3,15 @@ package com.foodkapev.foodsharingrus
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.foodkapev.foodsharingrus.Model.City
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.foodkapev.foodsharingrus.databinding.ActivityAddPostBinding
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -24,19 +23,15 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
-import kotlinx.android.synthetic.main.activity_add_post.*
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class AddPostActivity : AppCompatActivity() {
     private var myUrl = ""
     private var imageUri: Uri? = null
     private var storageAddPostPicRef: StorageReference? = null
+    private val binding by viewBinding(ActivityAddPostBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,22 +39,24 @@ class AddPostActivity : AppCompatActivity() {
 
         storageAddPostPicRef = FirebaseStorage.getInstance().reference.child("Posts Pictures")
 
-        save_new_post_btn.setOnClickListener { uploadImage() }
+        with(binding) {
+            saveNewPostBtn.setOnClickListener { uploadImage() }
 
-        close_add_post_btn.setOnClickListener { onBackPressed() }
+            closeAddPostBtn.setOnClickListener { onBackPressed() }
 
-        image_post.setOnClickListener {
-            CropImage.activity().start(this)
-        }
+            imagePost.setOnClickListener {
+                CropImage.activity().start(this@AddPostActivity)
+            }
 
 //        val json = assets.open("cities.json").bufferedReader().readText()
 //        val cities = Json.decodeFromString<City>(json)
 //        val citiesArray: Array<String> = arrayOf(cities.city)
 //        Log.d("asdas", citiesArray[0])
-        val cities = resources.getStringArray(R.array.cities)
-        val adapter = ArrayAdapter(
-            this, android.R.layout.simple_dropdown_item_1line, cities)
-        city_picker_list.setAdapter(adapter)
+            val cities = resources.getStringArray(R.array.cities)
+            val adapter = ArrayAdapter(
+                this@AddPostActivity, android.R.layout.simple_dropdown_item_1line, cities)
+            cityPickerList.setAdapter(adapter)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -72,11 +69,13 @@ class AddPostActivity : AppCompatActivity() {
                 dimensionsInPx, resources.displayMetrics).toInt()
 
             imageUri = result.uri
-            image_post.setImageURI(imageUri)
-            image_post.layoutParams.width = dimensionInDp
-            image_post.layoutParams.height = dimensionInDp
-            image_post.requestLayout()
-            add_text.visibility = View.GONE
+            with(binding) {
+                imagePost.setImageURI(imageUri)
+                imagePost.layoutParams.width = dimensionInDp
+                imagePost.layoutParams.height = dimensionInDp
+                imagePost.requestLayout()
+                addText.visibility = View.GONE
+            }
         }
     }
 
@@ -85,11 +84,11 @@ class AddPostActivity : AppCompatActivity() {
             imageUri == null -> Toast.makeText(
                 this, "Поле изображения пусто",
                 Toast.LENGTH_SHORT).show()
-            description_post.text.isEmpty() -> Toast.makeText(
+            binding.descriptionPost.text.isEmpty() -> Toast.makeText(
                 this, "Поле описания пусто",
                 Toast.LENGTH_SHORT).show()
             else -> {
-                val progressDialog: ProgressDialog = ProgressDialog(this)
+                val progressDialog = ProgressDialog(this)
                 progressDialog.setTitle("Добавление предложения")
                 progressDialog.setMessage("Пожалуйста, подождите...")
                 progressDialog.show()
@@ -119,19 +118,21 @@ class AddPostActivity : AppCompatActivity() {
 
                         val postMap = HashMap<String, Any>()
 
-                        postMap["postId"] = postId!!
-                        postMap["title"] = title_post.text.toString()
-                        postMap["description"] = description_post.text.toString()
-                        postMap["publisher"] = FirebaseAuth.getInstance().currentUser!!.uid
-                        postMap["postImage"] = myUrl
-                        postMap["time"] = date.toString()
-                        postMap["location"] = city_picker_list.text.toString()
-                        if (edible_goods_type.isChecked)
-                            postMap["type"] = edible_goods_type.text.toString()
-                        else if (inedible_goods_type.isChecked)
-                            postMap["type"] = inedible_goods_type.text.toString()
+                        with(binding) {
+                            postMap["postId"] = postId!!
+                            postMap["title"] = titlePost.text.toString()
+                            postMap["description"] = descriptionPost.text.toString()
+                            postMap["publisher"] = FirebaseAuth.getInstance().currentUser!!.uid
+                            postMap["postImage"] = myUrl
+                            postMap["time"] = date.toString()
+                            postMap["location"] = cityPickerList.text.toString()
+                            if (edibleGoodsType.isChecked)
+                                postMap["type"] = edibleGoodsType.text.toString()
+                            else if (inedibleGoodsType.isChecked)
+                                postMap["type"] = inedibleGoodsType.text.toString()
 
-                        ref.child(postId).updateChildren(postMap)
+                            ref.child(postId).updateChildren(postMap)
+                        }
 
                         Toast.makeText(this, "Предложение добавлено успешно!", Toast.LENGTH_SHORT).show()
 

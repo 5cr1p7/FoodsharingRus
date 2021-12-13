@@ -7,7 +7,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.foodkapev.foodsharingrus.Model.User
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.foodkapev.foodsharingrus.data.User
+import com.foodkapev.foodsharingrus.databinding.ActivityAccountSettingsBinding
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -22,8 +24,6 @@ import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
-import kotlinx.android.synthetic.main.activity_account_settings.*
-import kotlinx.android.synthetic.main.activity_account_settings.full_name_profile_fragment
 
 class AccountSettingsActivity : AppCompatActivity() {
     private lateinit var firebaseUser: FirebaseUser
@@ -31,6 +31,7 @@ class AccountSettingsActivity : AppCompatActivity() {
     private var myUrl = ""
     private var imageUri: Uri? = null
     private var storageProfilePicRef: StorageReference? = null
+    private val binding by viewBinding(ActivityAccountSettingsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,102 +40,105 @@ class AccountSettingsActivity : AppCompatActivity() {
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
         storageProfilePicRef = FirebaseStorage.getInstance().reference.child("Profile Pictures")
 
-        logout_btn.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            val signOutIntent = Intent(this, LoginActivity::class.java)
-            signOutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(signOutIntent)
-            finish()
-        }
-
-        close_profile_btn.setOnClickListener {
-            onBackPressed()
-            finish()
-        }
-
-        delete_account_btn.setOnClickListener {
-
-        }
-
-        change_image_btn.setOnClickListener {
-            checker = "clicked"
-
-            CropImage.activity().setAspectRatio(1, 1).start(this)
-        }
-
-        save_info_profile_btn.setOnClickListener {
-            if (checker == "clicked") {
-                uploadImageAndUpdateInfo()
+        with(binding) {
+            logoutBtn.setOnClickListener {
+                FirebaseAuth.getInstance().signOut()
+                val signOutIntent = Intent(this@AccountSettingsActivity, LoginActivity::class.java)
+                signOutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(signOutIntent)
+                finish()
             }
-            else {
-                updateUserInfoOnly()
+
+            closeProfileBtn.setOnClickListener {
+                onBackPressed()
+                finish()
             }
-        }
 
-        userInfo()
+            deleteAccountBtn.setOnClickListener {
 
+            }
 
-    }
+            changeImageBtn.setOnClickListener {
+                checker = "clicked"
 
-    private fun uploadImageAndUpdateInfo() {
-        when {
-            imageUri == null -> Toast.makeText(
-                this, "Загрузите изображение",
-                Toast.LENGTH_SHORT).show()
-            full_name_profile_fragment.text.isEmpty() -> Toast.makeText(
-                this, "Поле имени пусто",
-                Toast.LENGTH_SHORT).show()
-            username_profile_fragment.text.isEmpty() -> Toast.makeText(
-                this, "Поле никнейма пусто",
-                Toast.LENGTH_SHORT).show()
-//            bio_profile_fragment_edit.text.isEmpty() -> Toast.makeText(
-//                this, "Bio field is empty",
-//                Toast.LENGTH_SHORT).show()
-            else -> {
-                val progressDialog = ProgressDialog(this)
-                progressDialog.setTitle("Сохранение изменений")
-                progressDialog.setMessage("Пожалуйста, подождите ...")
-                progressDialog.show()
+                CropImage.activity().setAspectRatio(1, 1).start(this@AccountSettingsActivity)
+            }
 
-                val fileRef = storageProfilePicRef!!.child(firebaseUser.uid + ".jpg")
-
-                val uploadTask: StorageTask<*>
-                uploadTask = fileRef.putFile(imageUri!!)
-
-                uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>>{ task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
-                            progressDialog.dismiss()
-                        }
-                    }
-                    return@Continuation fileRef.downloadUrl
-                }).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val downloadUrl = task.result
-                        myUrl = downloadUrl.toString()
-
-                        val ref = FirebaseDatabase.getInstance().reference.child("Users")
-
-                        val userMap = HashMap<String, Any>()
-
-                        userMap["fullname"] = full_name_profile_fragment.text.toString()
-                        userMap["username"] = username_profile_fragment.text.toString()
-                        userMap["bio"] = bio_profile_fragment_edit.text.toString()
-                        userMap["image"] = myUrl
-
-                        ref.child(firebaseUser.uid).updateChildren(userMap)
-
-                        val intent = Intent(this, AccountSettingsActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                        progressDialog.dismiss()
-                    } else
-                        progressDialog.dismiss()
+            saveInfoProfileBtn.setOnClickListener {
+                if (checker == "clicked") {
+                    uploadImageAndUpdateInfo()
+                } else {
+                    updateUserInfoOnly()
                 }
             }
         }
 
+        userInfo()
+    }
+
+    private fun uploadImageAndUpdateInfo() {
+        with(binding) {
+            when {
+                imageUri == null -> Toast.makeText(
+                    this@AccountSettingsActivity, "Загрузите изображение",
+                    Toast.LENGTH_SHORT
+                ).show()
+                fullNameProfileFragment.text.isEmpty() -> Toast.makeText(
+                    this@AccountSettingsActivity, "Поле имени пусто",
+                    Toast.LENGTH_SHORT
+                ).show()
+                usernameProfileFragment.text.isEmpty() -> Toast.makeText(
+                    this@AccountSettingsActivity, "Поле никнейма пусто",
+                    Toast.LENGTH_SHORT
+                ).show()
+//            bio_profile_fragment_edit.text.isEmpty() -> Toast.makeText(
+//                this, "Bio field is empty",
+//                Toast.LENGTH_SHORT).show()
+                else -> {
+                    val progressDialog = ProgressDialog(this@AccountSettingsActivity)
+                    progressDialog.setTitle("Сохранение изменений")
+                    progressDialog.setMessage("Пожалуйста, подождите ...")
+                    progressDialog.show()
+
+                    val fileRef = storageProfilePicRef!!.child(firebaseUser.uid + ".jpg")
+
+                    val uploadTask: StorageTask<*>
+                    uploadTask = fileRef.putFile(imageUri!!)
+
+                    uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let {
+                                throw it
+                                progressDialog.dismiss()
+                            }
+                        }
+                        return@Continuation fileRef.downloadUrl
+                    }).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val downloadUrl = task.result
+                            myUrl = downloadUrl.toString()
+
+                            val ref = FirebaseDatabase.getInstance().reference.child("Users")
+
+                            val userMap = HashMap<String, Any>()
+
+                            userMap["fullname"] = fullNameProfileFragment.text.toString()
+                            userMap["username"] = usernameProfileFragment.text.toString()
+                            userMap["bio"] = bioProfileFragmentEdit.text.toString()
+                            userMap["image"] = myUrl
+
+                            ref.child(firebaseUser.uid).updateChildren(userMap)
+
+                            val intent = Intent(this@AccountSettingsActivity, AccountSettingsActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                            progressDialog.dismiss()
+                        } else
+                            progressDialog.dismiss()
+                    }
+                }
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -143,39 +147,41 @@ class AccountSettingsActivity : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val result = CropImage.getActivityResult(data)
             imageUri = result.uri
-            profile_image_view_profile_fragment.setImageURI(imageUri)
+            binding.profileImageViewProfileFragment.setImageURI(imageUri)
         }
     }
 
     private fun updateUserInfoOnly() {
-        when {
-            full_name_profile_fragment.text.isEmpty() -> Toast.makeText(
-                this, "Поле имени пусто",
-                Toast.LENGTH_SHORT
-            ).show()
-            username_profile_fragment.text.isEmpty() -> Toast.makeText(
-                this, "Поле никнейма пусто",
-                Toast.LENGTH_SHORT
-            ).show()
-            bio_profile_fragment_edit.text.isEmpty() -> Toast.makeText(
-                this, "Поле о себе пусто",
-                Toast.LENGTH_SHORT
-            ).show()
-            else -> {
-                val usersRef = FirebaseDatabase.getInstance().reference.child("Users")
-                val userMap = HashMap<String, Any>()
+        with(binding) {
+            when {
+                fullNameProfileFragment.text.isEmpty() -> Toast.makeText(
+                    this@AccountSettingsActivity, "Поле имени пусто",
+                    Toast.LENGTH_SHORT
+                ).show()
+                usernameProfileFragment.text.isEmpty() -> Toast.makeText(
+                    this@AccountSettingsActivity, "Поле никнейма пусто",
+                    Toast.LENGTH_SHORT
+                ).show()
+                bioProfileFragmentEdit.text.isEmpty() -> Toast.makeText(
+                    this@AccountSettingsActivity, "Поле о себе пусто",
+                    Toast.LENGTH_SHORT
+                ).show()
+                else -> {
+                    val usersRef = FirebaseDatabase.getInstance().reference.child("Users")
+                    val userMap = HashMap<String, Any>()
 
-                userMap["fullname"] = full_name_profile_fragment.text.toString()
-                userMap["username"] = username_profile_fragment.text.toString()
-                userMap["bio"] = bio_profile_fragment_edit.text.toString()
+                    userMap["fullname"] = fullNameProfileFragment.text.toString()
+                    userMap["username"] = usernameProfileFragment.text.toString()
+                    userMap["bio"] = bioProfileFragmentEdit.text.toString()
 
-                usersRef.child(firebaseUser.uid).updateChildren(userMap)
+                    usersRef.child(firebaseUser.uid).updateChildren(userMap)
 
-                Toast.makeText(this, "Информация успешно обновлена!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AccountSettingsActivity, "Информация успешно обновлена!", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(this, AccountSettingsActivity::class.java)
-                startActivity(intent)
-                finish()
+                    val intent = Intent(this@AccountSettingsActivity, AccountSettingsActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }
@@ -190,10 +196,12 @@ class AccountSettingsActivity : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
 
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(profile_image_view_profile_fragment)
-                    username_profile_fragment.setText(user.getUsername())
-                    full_name_profile_fragment.setText(user.getFullname())
-                    bio_profile_fragment_edit.setText(user.getBio())
+                    with(binding) {
+                        Picasso.get().load(user!!.image).placeholder(R.drawable.profile).into(profileImageViewProfileFragment)
+                        usernameProfileFragment.setText(user.username)
+                        fullNameProfileFragment.setText(user.fullname)
+                        bioProfileFragmentEdit.setText(user.bio)
+                    }
                 }
             }
 
