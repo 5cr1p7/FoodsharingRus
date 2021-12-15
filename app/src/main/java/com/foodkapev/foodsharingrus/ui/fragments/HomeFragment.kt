@@ -2,17 +2,15 @@ package com.foodkapev.foodsharingrus.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
-import com.foodkapev.foodsharingrus.adapters.PostAdapter
-import com.foodkapev.foodsharingrus.data.Post
+import com.foodkapev.foodsharingrus.ui.adapters.PostAdapter
+import com.foodkapev.foodsharingrus.domain.Post
 import com.foodkapev.foodsharingrus.databinding.FragmentHomeBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

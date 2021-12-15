@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
-import com.foodkapev.foodsharingrus.adapters.SearchPostAdapter
-import com.foodkapev.foodsharingrus.data.Post
+import com.foodkapev.foodsharingrus.ui.adapters.SearchPostAdapter
+import com.foodkapev.foodsharingrus.domain.Post
 import com.foodkapev.foodsharingrus.databinding.FragmentSearchBinding
 import com.foodkapev.foodsharingrus.viewmodels.SearchViewModel
 import com.google.firebase.database.DataSnapshot
