@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.fragments
+package com.foodkapev.foodsharingrus.presentation.fragments
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
-import com.foodkapev.foodsharingrus.ui.adapters.SearchPostAdapter
-import com.foodkapev.foodsharingrus.domain.Post
+import com.foodkapev.foodsharingrus.presentation.adapters.SearchPostAdapter
+import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.databinding.FragmentSearchBinding
-import com.foodkapev.foodsharingrus.viewmodels.SearchViewModel
+import com.foodkapev.foodsharingrus.presentation.viewmodels.SearchViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -46,7 +46,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     binding.recyclerViewSearch.visibility = View.VISIBLE
 
                     retrievePosts()
-                    searchPost(s.toString())
+//                    searchPost(s.toString())
+                    searchViewModel.searchPost(s.toString())
                 }
             }
 
@@ -59,27 +60,27 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         })
     }
 
-    private fun searchPost(input: String) {
-        val query = FirebaseDatabase.getInstance().reference
-            .child("Posts")
-            .orderByChild("title")
-            .startAt(input)
-            .endAt(input + "\uf8ff")
-
-        query.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(dataSnaphot: DataSnapshot) {
-                mPost?.clear()
-                for (snapshot in dataSnaphot.children) {
-                    val post = snapshot.getValue(Post::class.java)
-                    if (post != null) {
-                        mPost?.add(post)
-                    }
-                }
-            }
-            override fun onCancelled(p0: DatabaseError) {
-            }
-        })
-    }
+//    private fun searchPost(input: String) {
+//        val query = FirebaseDatabase.getInstance().reference
+//            .child("Posts")
+//            .orderByChild("title")
+//            .startAt(input)
+//            .endAt(input + "\uf8ff")
+//
+//        query.addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(dataSnaphot: DataSnapshot) {
+//                mPost?.clear()
+//                for (snapshot in dataSnaphot.children) {
+//                    val post = snapshot.getValue(Post::class.java)
+//                    if (post != null) {
+//                        mPost?.add(post)
+//                    }
+//                }
+//            }
+//            override fun onCancelled(p0: DatabaseError) {
+//            }
+//        })
+//    }
 
     private fun retrievePosts() {
         val userRef = FirebaseDatabase.getInstance().reference.child("Users")

@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout11"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.NotificationsFragment">
+    tools:context=".presentation.fragments.NotificationsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_notifications"

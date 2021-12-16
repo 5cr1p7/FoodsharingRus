@@ -1,17 +1,17 @@
-package com.foodkapev.foodsharingrus.adapters
+package com.foodkapev.foodsharingrus.presentation.adapters
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.NonNull
-import androidx.fragment.app.FragmentActivity
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.fragments.PostDetailsFragment
-import com.foodkapev.foodsharingrus.domain.Post
-import com.foodkapev.foodsharingrus.domain.User
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.domain.models.User
 import com.foodkapev.foodsharingrus.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -44,11 +44,9 @@ class PostAdapter(private val mContext: Context,
         Glide.with(mContext).load(post.postImage).into(holder.postImage)
 
         holder.postImage.setOnClickListener {
-            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-            editor.putString("postId", post.postId)
-            editor.apply()
-            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, PostDetailsFragment()).commit()
+            val bundle = Bundle()
+            bundle.putString("postId", post.postId)
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_postDetailsFragment, bundle)
         }
 
 

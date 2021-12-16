@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.adapters.CommentsAdapter
-import com.foodkapev.foodsharingrus.data.User
+import com.foodkapev.foodsharingrus.presentation.adapters.CommentsAdapter
+import com.foodkapev.foodsharingrus.domain.models.User
 import com.foodkapev.foodsharingrus.databinding.ActivityCommentsBinding
+import com.foodkapev.foodsharingrus.domain.models.Comment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -24,7 +25,7 @@ class CommentsActivity : AppCompatActivity() {
     private var publisherId = ""
     private var firebaseUser: FirebaseUser? = null
     private var commentsAdapter: CommentsAdapter? = null
-    private var commentList: MutableList<com.foodkapev.foodsharingrus.data.Comment>? = null
+    private var commentList: MutableList<Comment>? = null
     private val binding by viewBinding(ActivityCommentsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,7 +121,7 @@ class CommentsActivity : AppCompatActivity() {
                 if (dataSnapshot.exists())
                     commentList!!.clear()
                 for (snapshot in dataSnapshot.children) {
-                    val comment = snapshot.getValue(com.foodkapev.foodsharingrus.data.Comment::class.java)
+                    val comment = snapshot.getValue(Comment::class.java)
                     commentList!!.add(comment!!)
                 }
                 commentList!!.reverse()

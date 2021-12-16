@@ -7,11 +7,15 @@ import android.os.Bundle
 import android.widget.Toast
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.databinding.ActivityLoginBinding
+import com.foodkapev.foodsharingrus.domain.models.LoginUserParam
+import com.foodkapev.foodsharingrus.domain.usecase.LoginUseCase
+import com.foodkapev.foodsharingrus.presentation.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityLoginBinding::bind)
+    private val loginUseCase = LoginUseCase()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +27,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener {
+//            val email = binding.emailLogin.text.toString()
+//            val password = binding.passwordLogin.text.toString()
+//            val params = LoginUserParam(email, password)
+//            loginUseCase.execute(params)
             loginUser()
         }
     }

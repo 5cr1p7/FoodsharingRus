@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.adapters
+package com.foodkapev.foodsharingrus.presentation.adapters
 
 import android.content.Context
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.domain.Post
+import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.R
 
 class ImagesAdapter(private val mContext: Context, private val mPost: List<Post>)

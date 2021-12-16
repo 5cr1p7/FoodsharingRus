@@ -1,12 +1,12 @@
-package com.foodkapev.foodsharingrus.fragments
+package com.foodkapev.foodsharingrus.presentation.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.foodkapev.foodsharingrus.ui.adapters.NotificationsAdapter
-import com.foodkapev.foodsharingrus.domain.Notification
+import com.foodkapev.foodsharingrus.presentation.adapters.NotificationsAdapter
+import com.foodkapev.foodsharingrus.domain.models.Notification
 import com.foodkapev.foodsharingrus.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

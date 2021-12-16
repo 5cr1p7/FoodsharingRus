@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.data
+package com.foodkapev.foodsharingrus.domain.models
 
 import kotlinx.serialization.Serializable
 

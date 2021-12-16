@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.adapters
+package com.foodkapev.foodsharingrus.presentation.adapters
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -10,17 +10,17 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.foodkapev.foodsharingrus.CommentsActivity
-import com.foodkapev.foodsharingrus.domain.Post
-import com.foodkapev.foodsharingrus.domain.User
 import com.foodkapev.foodsharingrus.R
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.domain.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import timber.log.Timber
 
 class PostDetailsAdapter(private val mContext: Context,
                          private val mPost: List<Post>): RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
@@ -107,8 +107,10 @@ class PostDetailsAdapter(private val mContext: Context,
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
 
-                    Picasso.get().load(user!!.image).placeholder(R.drawable.profile).into(profileImage)
-                    userName.text = user.username
+//                    Picasso.get().load(user!!.image).placeholder(R.drawable.profile).into(profileImage)
+                    Timber.d(user?.image)
+                    Glide.with(mContext).load(user?.image).placeholder(R.drawable.profile).into(profileImage)
+                    userName.text = user?.username
 //                    publisher.text = user.getFullname()
 
                 }

@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.adapters
+package com.foodkapev.foodsharingrus.presentation.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.fragment.app.FragmentActivity
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.foodkapev.foodsharingrus.fragments.PostDetailsFragment
-import com.foodkapev.foodsharingrus.fragments.ProfileFragment
-import com.foodkapev.foodsharingrus.domain.Notification
-import com.foodkapev.foodsharingrus.domain.Post
-import com.foodkapev.foodsharingrus.domain.User
 import com.foodkapev.foodsharingrus.R
+import com.foodkapev.foodsharingrus.domain.models.Notification
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.domain.models.User
+import com.foodkapev.foodsharingrus.presentation.fragments.NotificationsFragmentDirections
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -59,21 +58,11 @@ class NotificationsAdapter(
 
         holder.itemView.setOnClickListener {
             if (notification.isPost) {
-                val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-
-                editor.putString("postId", notification.postId)
-                editor.apply()
-
-                (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, PostDetailsFragment()).commit()
+                val action = NotificationsFragmentDirections.actionNotificationsFragmentToPostDetailsFragment(notification.postId)
+                Navigation.findNavController(it).navigate(action)
             } else {
-                val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-
-                editor.putString("profileId", notification.userId)
-                editor.apply()
-
-                (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ProfileFragment()).commit()
+                val action = NotificationsFragmentDirections.actionNotificationsFragmentToProfileFragment(notification.userId)
+                Navigation.findNavController(it).navigate(action)
             }
         }
         userInfo(holder.profileImage, holder.userName, notification.userId)

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PrivacyPolicyActivity" />
+        <activity android:name=".presentation.activities.PrivacyPolicyActivity" />
         <activity android:name=".CommentsActivity" />
 
         <meta-data
@@ -22,12 +22,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity
-            android:name=".AccountSettingsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AddPostActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />
@@ -42,7 +36,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity

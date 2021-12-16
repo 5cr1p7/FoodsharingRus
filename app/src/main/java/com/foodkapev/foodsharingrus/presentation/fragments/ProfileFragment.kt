@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.fragments
+package com.foodkapev.foodsharingrus.presentation.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -6,13 +6,14 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.foodkapev.foodsharingrus.AccountSettingsActivity
-import com.foodkapev.foodsharingrus.ui.adapters.ImagesAdapter
-import com.foodkapev.foodsharingrus.domain.Post
-import com.foodkapev.foodsharingrus.domain.User
+import com.bumptech.glide.Glide
+import com.foodkapev.foodsharingrus.presentation.adapters.ImagesAdapter
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.domain.models.User
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +22,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,22 +57,27 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         imagesAdapterUploadedImages =
             context?.let { ImagesAdapter(it, postsListUploadedImages as ArrayList<Post>) }
         recyclerViewUploadedImages.adapter = imagesAdapterUploadedImages
+        with(binding) {
+            binding.optionsView.setOnClickListener {
+                val action =
+                    ProfileFragmentDirections.actionProfileFragmentToAccountSettingsFragment(
+                        profileFragmentUsername.text.toString(),
+                        fullNameProfileFragment.text.toString(),
+                        bioProfileFragmentText.text.toString(),
+                    )
+                findNavController().navigate(action)
+            }
 
-        binding.optionsView.setOnClickListener {
-            val intent = Intent(context, AccountSettingsActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.helpView.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://raw.githubusercontent.com/5cr1p7/FoodsharingRus/master/PrivacyPolicy")
-            )
-            startActivity(browserIntent)
+            binding.helpView.setOnClickListener {
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://raw.githubusercontent.com/5cr1p7/FoodsharingRus/master/PrivacyPolicy")
+                )
+                startActivity(browserIntent)
+            }
         }
         userInfo()
         currentUserPosts()
-
     }
 
     private fun checkFollowAndFollowingBtnStatus() {
@@ -138,8 +143,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     val user = dataSnapshot.getValue(User::class.java)
 
                     with(binding) {
-                        Picasso.get().load(user?.image).placeholder(R.drawable.profile)
-                            .into(proImageProfileFragment)
+                        Glide.with(requireContext()).load(user?.image)
+                            .placeholder(R.drawable.profile).into(proImageProfileFragment)
+
                         profileFragmentUsername.text = user?.username
                         fullNameProfileFragment.text = user?.fullname
                         bioProfileFragmentText.text = user?.bio
