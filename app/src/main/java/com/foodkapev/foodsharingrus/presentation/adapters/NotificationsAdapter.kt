@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import timber.log.Timber
 
 class NotificationsAdapter(
     private val mContext: Context,
@@ -57,12 +58,13 @@ class NotificationsAdapter(
         }
 
         holder.itemView.setOnClickListener {
+            Timber.d(notification.isPost.toString())
             if (notification.isPost) {
                 val action = NotificationsFragmentDirections.actionNotificationsFragmentToPostDetailsFragment(notification.postId)
                 Navigation.findNavController(it).navigate(action)
-            } else {
-                val action = NotificationsFragmentDirections.actionNotificationsFragmentToProfileFragment(notification.userId)
-                Navigation.findNavController(it).navigate(action)
+//            } else {
+//                val action = NotificationsFragmentDirections.actionNotificationsFragmentToProfileFragment(notification.userId)
+//                Navigation.findNavController(it).navigate(action)
             }
         }
         userInfo(holder.profileImage, holder.userName, notification.userId)

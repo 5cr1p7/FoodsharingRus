@@ -1,28 +1,28 @@
 package com.foodkapev.foodsharingrus.presentation.adapters
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.domain.models.User
-import com.foodkapev.foodsharingrus.R
+import com.foodkapev.foodsharingrus.presentation.fragments.HomeFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlin.collections.HashMap
 
-class PostAdapter(private val mContext: Context,
-                  private val mPost: List<Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class HomePostsAdapter(private val mContext: Context,
+                       private val mPost: List<Post>): RecyclerView.Adapter<HomePostsAdapter.ViewHolder>() {
 
     private var firebaseUser: FirebaseUser? = null
 
@@ -44,9 +44,8 @@ class PostAdapter(private val mContext: Context,
         Glide.with(mContext).load(post.postImage).into(holder.postImage)
 
         holder.postImage.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("postId", post.postId)
-            Navigation.findNavController(holder.itemView).navigate(R.id.action_homeFragment_to_postDetailsFragment, bundle)
+            val action = HomeFragmentDirections.actionHomeFragmentToPostDetailsFragment(post.postId)
+            Navigation.findNavController(holder.itemView).navigate(action)
         }
 
 

@@ -58,7 +58,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
-
     // ViewBinding
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
 

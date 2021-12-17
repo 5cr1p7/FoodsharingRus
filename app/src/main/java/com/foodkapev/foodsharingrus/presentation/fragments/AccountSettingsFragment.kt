@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.foodkapev.foodsharingrus.LoginActivity
@@ -38,7 +37,6 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
     private var imageUri: Uri? = null
     private var storageProfilePicRef: StorageReference? = null
     private val binding by viewBinding(FragmentAccountSettingsBinding::bind)
-    private val args: AccountSettingsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +50,7 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
                 val signOutIntent = Intent(requireContext(), LoginActivity::class.java)
                 signOutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(signOutIntent)
-                findNavController().popBackStack()
+                activity?.finish()
             }
 
             closeProfileBtn.setOnClickListener {
@@ -213,9 +211,9 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
                         Glide.with(requireContext()).load(user?.image)
                             .placeholder(R.drawable.profile)
                             .into(profileImageViewProfileFragment)
-                        fullNameProfileFragment.setText(args.name)
-                        usernameProfileFragment.setText(args.username)
-                        bioProfileFragmentEdit.setText(args.bio)
+                        fullNameProfileFragment.setText(user?.fullname)
+                        usernameProfileFragment.setText(user?.username)
+                        bioProfileFragmentEdit.setText(user?.bio)
                     }
                 }
             }

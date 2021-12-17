@@ -1,18 +1,18 @@
 package com.foodkapev.foodsharingrus.presentation.adapters
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.CommentsActivity
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.domain.models.User
+import com.foodkapev.foodsharingrus.presentation.fragments.PostDetailsFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -57,12 +57,9 @@ class PostDetailsAdapter(private val mContext: Context,
         publisherInfo(holder.profileImage, holder.userName, post.publisher)
 
         holder.commentBtn.setOnClickListener {
-            val commentsIntent = Intent(mContext, CommentsActivity::class.java)
-            commentsIntent.putExtra("postId", post.postId)
-            commentsIntent.putExtra("publisherId", post.publisher)
-            mContext.startActivity(commentsIntent)
+            val action = PostDetailsFragmentDirections.actionPostDetailsFragmentToCommentsFragment(post.postId, post.publisher)
+            Navigation.findNavController(holder.itemView).navigate(action)
         }
-
     }
 
 

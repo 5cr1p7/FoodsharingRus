@@ -1,7 +1,6 @@
 package com.foodkapev.foodsharingrus.presentation.adapters
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,12 @@ import androidx.annotation.NonNull
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.R
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.presentation.fragments.ProfileFragmentDirections
 
-class ImagesAdapter(private val mContext: Context, private val mPost: List<Post>)
-    : RecyclerView.Adapter<ImagesAdapter.ViewHolder?>() {
+class ProfilePostsAdapter(private val mContext: Context, private val mPost: List<Post>)
+    : RecyclerView.Adapter<ProfilePostsAdapter.ViewHolder?>() {
 
     inner class ViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
         var postImage: ImageView = itemView.findViewById(R.id.post_image)
@@ -39,10 +39,9 @@ class ImagesAdapter(private val mContext: Context, private val mPost: List<Post>
 
         Navigation.createNavigateOnClickListener(R.id.action_profileFragment_to_postDetailsFragment)
 
-        holder.postImage.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("postId", post.postId)
-            Navigation.findNavController(holder.itemView).navigate(R.id.action_profileFragment_to_postDetailsFragment, bundle)
+        holder.itemView.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToPostDetailsFragment(post.postId)
+            Navigation.findNavController(holder.itemView).navigate(action)
         }
     }
 

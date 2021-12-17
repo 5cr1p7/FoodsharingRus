@@ -4,18 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.presentation.adapters.ImagesAdapter
-import com.foodkapev.foodsharingrus.domain.models.Post
-import com.foodkapev.foodsharingrus.domain.models.User
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.databinding.FragmentProfileBinding
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.domain.models.User
+import com.foodkapev.foodsharingrus.presentation.adapters.ProfilePostsAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -30,7 +30,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var firebaseUser: FirebaseUser
 
     var postsListUploadedImages: List<Post>? = null
-    var imagesAdapterUploadedImages: ImagesAdapter? = null
+    var profileAdapter: ProfilePostsAdapter? = null
 
     private val binding by viewBinding(FragmentProfileBinding::bind)
 
@@ -54,18 +54,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         recyclerViewUploadedImages.layoutManager = linearLayoutManagerUploadedImages
 
         postsListUploadedImages = ArrayList()
-        imagesAdapterUploadedImages =
-            context?.let { ImagesAdapter(it, postsListUploadedImages as ArrayList<Post>) }
-        recyclerViewUploadedImages.adapter = imagesAdapterUploadedImages
+        profileAdapter =
+            context?.let { ProfilePostsAdapter(it, postsListUploadedImages as ArrayList<Post>) }
+        recyclerViewUploadedImages.adapter = profileAdapter
         with(binding) {
             binding.optionsView.setOnClickListener {
-                val action =
-                    ProfileFragmentDirections.actionProfileFragmentToAccountSettingsFragment(
-                        profileFragmentUsername.text.toString(),
-                        fullNameProfileFragment.text.toString(),
-                        bioProfileFragmentText.text.toString(),
-                    )
-                findNavController().navigate(action)
+//                val action =
+//                    ProfileFragmentDirections.actionProfileFragmentToAccountSettingsFragment(
+//                        profileFragmentUsername.text.toString(),
+//                        fullNameProfileFragment.text.toString(),
+//                        bioProfileFragmentText.text.toString(),
+//                    )
+                findNavController().navigate(R.id.action_profileFragment_to_accountSettingsFragment)
             }
 
             binding.helpView.setOnClickListener {
@@ -121,7 +121,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                             (postsListUploadedImages as ArrayList<Post>).add(post)
                         Collections.reverse(postsListUploadedImages)
 
-                        imagesAdapterUploadedImages!!.notifyDataSetChanged()
+                        profileAdapter!!.notifyDataSetChanged()
                     }
                 }
             }

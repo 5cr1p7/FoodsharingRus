@@ -49,15 +49,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profile_image_view_profile_fragment"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/profile"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/circleImageView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout_profile" />
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout_profile"/>
 
     <TextView
         android:id="@+id/change_image_btn"

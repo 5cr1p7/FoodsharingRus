@@ -1,16 +1,16 @@
 package com.foodkapev.foodsharingrus
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.presentation.adapters.CommentsAdapter
-import com.foodkapev.foodsharingrus.domain.models.User
-import com.foodkapev.foodsharingrus.databinding.ActivityCommentsBinding
+import com.foodkapev.foodsharingrus.databinding.FragmentCommentsBinding
 import com.foodkapev.foodsharingrus.domain.models.Comment
+import com.foodkapev.foodsharingrus.domain.models.User
+import com.foodkapev.foodsharingrus.presentation.adapters.CommentsAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -26,11 +26,11 @@ class CommentsActivity : AppCompatActivity() {
     private var firebaseUser: FirebaseUser? = null
     private var commentsAdapter: CommentsAdapter? = null
     private var commentList: MutableList<Comment>? = null
-    private val binding by viewBinding(ActivityCommentsBinding::bind)
+    private val binding by viewBinding(FragmentCommentsBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_comments)
+        setContentView(R.layout.fragment_comments)
 
         val intent = intent
         postId = intent.getStringExtra("postId").toString()

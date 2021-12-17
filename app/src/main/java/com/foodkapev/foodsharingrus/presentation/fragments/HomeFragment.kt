@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
-import com.foodkapev.foodsharingrus.presentation.adapters.PostAdapter
+import com.foodkapev.foodsharingrus.presentation.adapters.HomePostsAdapter
 import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.databinding.FragmentHomeBinding
 import com.google.firebase.database.DataSnapshot
@@ -20,7 +20,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
-    private var postAdapter: PostAdapter? = null
+    private var postAdapter: HomePostsAdapter? = null
     private var postList: MutableList<Post>? = null
     private var followingList: MutableList<Post>? = null
 
@@ -35,7 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.recyclerViewHome.layoutManager = linearLayoutManager
 
         postList = ArrayList()
-        postAdapter = context?.let { PostAdapter(it, postList as ArrayList<Post>) }
+        postAdapter = context?.let { HomePostsAdapter(it, postList as ArrayList<Post>) }
         binding.recyclerViewHome.adapter = postAdapter
 
         val types = arrayOf("Все предложения", "Съедобное", "Несъедобное")
