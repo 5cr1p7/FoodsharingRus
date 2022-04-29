@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/activity_comments.xml" value="0.26222826086956524" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_account_settings.xml" value="0.27309782608695654" />
+        <entry key="app/src/main/res/layout/fragment_add_post.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_post_details.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.35572916666666665" />

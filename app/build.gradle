@@ -9,14 +9,14 @@ plugins {
 
 android {
     compileSdkVersion 31
-    buildToolsVersion '30.0.3'
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId 'com.foodkapev.foodsharingrus'
+        applicationId "com.foodkapev.foodsharingrus"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 3
-        versionName '0.1.1'
+        versionName "0.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,7 +28,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     compileOptions {
@@ -36,53 +36,57 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "androidx.appcompat:appcompat:1.4.0"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.2"
+    implementation "com.google.android.material:material:1.4.0"
     implementation "androidx.fragment:fragment-ktx:1.4.0"
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
 
     // ViewBinding
-    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
+    implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3"
 
     // Firebase
-    implementation platform('com.google.firebase:firebase-bom:29.0.2')
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-core'
-    implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.firebase:firebase-storage'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation platform("com.google.firebase:firebase-bom:29.0.2")
+    implementation "com.google.firebase:firebase-core"
+    implementation "com.google.firebase:firebase-auth"
+    implementation "com.google.firebase:firebase-database"
+    implementation "com.google.firebase:firebase-storage"
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
+    implementation "com.google.firebase:firebase-analytics-ktx"
+
+    // DI
+    def daggerVersion = 2.35
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Images
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "de.hdodenhof:circleimageview:3.1.0"
+    implementation 'com.github.CanHub:Android-Image-Cropper:4.2.1'
+    implementation "com.squareup.picasso:picasso:2.71828"
 
     // Image picker
-    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.2.0'
-    implementation 'com.github.esafirm.android-image-picker:rximagepicker:2.2.0'
+    implementation "com.github.esafirm.android-image-picker:imagepicker:2.2.0"
+    implementation "com.github.esafirm.android-image-picker:rximagepicker:2.2.0"
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation "com.github.bumptech.glide:glide:4.13.1"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.13.1"
 
     // Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
@@ -90,9 +94,15 @@ dependencies {
     // Logging
     implementation "com.jakewharton.timber:timber:5.0.1"
 
+    // Analytics
+    implementation "com.google.firebase:firebase-analytics"
+    implementation "com.yandex.android:mobmetricalib:3.21.0"
+    implementation "com.flurry.android:analytics:13.1.0@aar"
+    implementation "com.appsflyer:af-android-sdk:6.5.4"
+
     // Tests
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
 
 }
