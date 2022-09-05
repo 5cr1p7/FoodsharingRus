@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.fragments
+package com.foodkapev.foodsharingrus.ui.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -9,7 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.databinding.FragmentPostDetailsBinding
 import com.foodkapev.foodsharingrus.domain.models.Post
-import com.foodkapev.foodsharingrus.presentation.adapters.PostDetailsAdapter
+import com.foodkapev.foodsharingrus.ui.adapters.PostDetailsAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

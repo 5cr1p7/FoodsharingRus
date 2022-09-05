@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.adapters
+package com.foodkapev.foodsharingrus.ui.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -11,10 +11,10 @@ import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.presentation.fragments.PostDetailsFragment
-import com.foodkapev.foodsharingrus.presentation.activities.MainActivity
-import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.R
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.ui.activities.MainActivity
+import com.foodkapev.foodsharingrus.ui.fragments.PostDetailsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 

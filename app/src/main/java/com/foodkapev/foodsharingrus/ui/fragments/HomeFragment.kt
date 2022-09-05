@@ -1,23 +1,22 @@
-package com.foodkapev.foodsharingrus.presentation.fragments
+package com.foodkapev.foodsharingrus.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
-import com.foodkapev.foodsharingrus.presentation.adapters.HomePostsAdapter
-import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.databinding.FragmentHomeBinding
+import com.foodkapev.foodsharingrus.domain.models.Post
+import com.foodkapev.foodsharingrus.ui.adapters.HomePostsAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private var postAdapter: HomePostsAdapter? = null

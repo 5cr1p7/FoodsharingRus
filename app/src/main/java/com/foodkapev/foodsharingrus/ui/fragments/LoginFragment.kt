@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.fragments
+package com.foodkapev.foodsharingrus.ui.fragments
 
 import android.app.ProgressDialog
 import android.os.Bundle

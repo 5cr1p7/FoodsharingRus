@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.viewmodels
+package com.foodkapev.foodsharingrus.ui.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -1,20 +1,23 @@
-package com.foodkapev.foodsharingrus.presentation.fragments
+package com.foodkapev.foodsharingrus.ui.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
-import com.foodkapev.foodsharingrus.LoginActivity
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.databinding.FragmentAccountSettingsBinding
 import com.foodkapev.foodsharingrus.domain.models.User
+import com.foodkapev.foodsharingrus.ui.activities.MainActivity
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -36,7 +39,19 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
     private var myUrl = ""
     private var imageUri: Uri? = null
     private var storageProfilePicRef: StorageReference? = null
-    private val binding by viewBinding(FragmentAccountSettingsBinding::bind)
+
+    private var _binding: FragmentAccountSettingsBinding? = null
+    private val binding
+        get() = _binding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentAccountSettingsBinding.inflate(inflater, container, false)
+        return binding?.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,30 +59,53 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
         storageProfilePicRef = FirebaseStorage.getInstance().reference.child("Profile Pictures")
 
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    CropImage.activity().start(requireContext(), this@AccountSettingsFragment)
+                } else {
+                    // Explain to the user that the feature is unavailable because the
+                    // features requires a permission that the user has denied. At the
+                    // same time, respect the user's decision. Don't link to system
+                    // settings in an effort to convince the user to change their
+                    // decision.
+                }
+            }
+
         with(binding) {
-            logoutBtn.setOnClickListener {
+            this?.logoutBtn?.setOnClickListener {
                 FirebaseAuth.getInstance().signOut()
-                val signOutIntent = Intent(requireContext(), LoginActivity::class.java)
+                val signOutIntent = Intent(requireContext(), MainActivity::class.java)
                 signOutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(signOutIntent)
                 activity?.finish()
             }
 
-            closeProfileBtn.setOnClickListener {
+            this?.closeProfileBtn?.setOnClickListener {
                 findNavController().popBackStack()
             }
 
-            deleteAccountBtn.setOnClickListener {
+            this?.deleteAccountBtn?.setOnClickListener {
 
             }
 
-            changeImageBtn.setOnClickListener {
+            this?.changeImageBtn?.setOnClickListener {
                 checker = "clicked"
 
-                CropImage.activity().start(requireContext(), this@AccountSettingsFragment)
+                if (shouldShowRequestPermissionRationale(
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                ) {
+                    Toast.makeText(requireContext(), "Необходимо разрешение", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
             }
 
-            saveInfoProfileBtn.setOnClickListener {
+            this?.saveInfoProfileBtn?.setOnClickListener {
                 if (checker == "clicked") {
                     uploadImageAndUpdateInfo()
                 } else {
@@ -86,11 +124,11 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
                     requireContext(), "Загрузите изображение",
                     Toast.LENGTH_SHORT
                 ).show()
-                fullNameProfileFragment.text.isEmpty() -> Toast.makeText(
+                this?.fullNameProfileFragment?.text?.isEmpty() == true -> Toast.makeText(
                     requireContext(), "Поле имени пусто",
                     Toast.LENGTH_SHORT
                 ).show()
-                usernameProfileFragment.text.isEmpty() -> Toast.makeText(
+                this?.usernameProfileFragment?.text?.isEmpty() == true -> Toast.makeText(
                     requireContext(), "Поле никнейма пусто",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -125,9 +163,9 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
 
                             val userMap = HashMap<String, Any>()
 
-                            userMap["fullname"] = fullNameProfileFragment.text.toString()
-                            userMap["username"] = usernameProfileFragment.text.toString()
-                            userMap["bio"] = bioProfileFragmentEdit.text.toString()
+                            userMap["fullname"] = this?.fullNameProfileFragment?.text.toString()
+                            userMap["username"] = this?.usernameProfileFragment?.text.toString()
+                            userMap["bio"] = this?.bioProfileFragmentEdit?.text.toString()
                             userMap["image"] = myUrl
 
                             ref.child(firebaseUser.uid).updateChildren(userMap)
@@ -135,7 +173,7 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
 //                            val intent =
 //                                Intent(requireContext(), AccountSettingsActivity::class.java)
 //                            startActivity(intent)
-//                            findNavController().popBackStack()
+                            findNavController().popBackStack()
                             progressDialog.dismiss()
                         } else
                             progressDialog.dismiss()
@@ -151,24 +189,24 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             val result = CropImage.getActivityResult(data)
             imageUri = result.uri
-            binding.profileImageViewProfileFragment.setImageURI(imageUri)
+            binding?.profileImageViewProfileFragment?.setImageURI(imageUri)
         }
     }
 
     private fun updateUserInfoOnly() {
         with(binding) {
             when {
-                fullNameProfileFragment.text.isEmpty() -> Toast.makeText(
+                this?.fullNameProfileFragment?.text?.isEmpty() == true -> Toast.makeText(
                     requireContext(), "Поле имени пусто",
                     Toast.LENGTH_SHORT
                 ).show()
 
-                usernameProfileFragment.text.isEmpty() -> Toast.makeText(
+                this?.usernameProfileFragment?.text?.isEmpty() == true -> Toast.makeText(
                     requireContext(), "Поле никнейма пусто",
                     Toast.LENGTH_SHORT
                 ).show()
 
-                bioProfileFragmentEdit.text.isEmpty() -> Toast.makeText(
+                this?.bioProfileFragmentEdit?.text?.isEmpty() == true -> Toast.makeText(
                     requireContext(), "Поле о себе пусто",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -176,9 +214,9 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
                     val usersRef = FirebaseDatabase.getInstance().reference.child("Users")
                     val userMap = HashMap<String, Any>()
 
-                    userMap["fullname"] = fullNameProfileFragment.text.toString()
-                    userMap["username"] = usernameProfileFragment.text.toString()
-                    userMap["bio"] = bioProfileFragmentEdit.text.toString()
+                    userMap["fullname"] = this?.fullNameProfileFragment?.text.toString()
+                    userMap["username"] = this?.usernameProfileFragment?.text.toString()
+                    userMap["bio"] = this?.bioProfileFragmentEdit?.text.toString()
 
                     usersRef.child(firebaseUser.uid).updateChildren(userMap)
 
@@ -190,7 +228,7 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
 
 //                    val intent = Intent(requireContext(), AccountSettingsActivity::class.java)
 //                    startActivity(intent)
-//                    findNavController().popBackStack()
+                    findNavController().popBackStack()
                 }
             }
         }
@@ -208,12 +246,14 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
                     val user = dataSnapshot.getValue(User::class.java)
 
                     with(binding) {
-                        Glide.with(requireContext()).load(user?.image)
-                            .placeholder(R.drawable.profile)
-                            .into(profileImageViewProfileFragment)
-                        fullNameProfileFragment.setText(user?.fullname)
-                        usernameProfileFragment.setText(user?.username)
-                        bioProfileFragmentEdit.setText(user?.bio)
+                        this?.profileImageViewProfileFragment?.let {
+                            Glide.with(requireContext()).load(user?.image)
+                                .placeholder(R.drawable.profile)
+                                .into(it)
+                        }
+                        this?.fullNameProfileFragment?.setText(user?.fullname)
+                        this?.usernameProfileFragment?.setText(user?.username)
+                        this?.bioProfileFragmentEdit?.setText(user?.bio)
                     }
                 }
             }
@@ -222,5 +262,10 @@ class AccountSettingsFragment : Fragment(R.layout.fragment_account_settings) {
 
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

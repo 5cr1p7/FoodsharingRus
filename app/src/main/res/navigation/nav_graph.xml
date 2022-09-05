@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.HomeFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.NotificationsFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.NotificationsFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notifications" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.ProfileFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -63,12 +63,12 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.SearchFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/postDetailsFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.PostDetailsFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.PostDetailsFragment"
         android:label="fragment_post_details"
         tools:layout="@layout/fragment_post_details" >
         <argument
@@ -84,12 +84,12 @@
     </fragment>
     <activity
         android:id="@+id/privacyPolicyActivity"
-        android:name="com.foodkapev.foodsharingrus.presentation.activities.PrivacyPolicyActivity"
+        android:name="com.foodkapev.foodsharingrus.ui.activities.PrivacyPolicyActivity"
         android:label="activity_privacy_policy"
         tools:layout="@layout/activity_privacy_policy" />
     <fragment
         android:id="@+id/addPostFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.AddPostFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.AddPostFragment"
         android:label="AddPostFragment" />
     <action
         android:id="@+id/action_global_addPostFragment"
@@ -128,11 +128,11 @@
         app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     <fragment
         android:id="@+id/accountSettingsFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.AccountSettingsFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.AccountSettingsFragment"
         android:label="AccountSettingsFragment" />
     <fragment
         android:id="@+id/commentsFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.CommentsFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.CommentsFragment"
         android:label="CommentsFragment" >
         <argument
             android:name="postId"
@@ -143,7 +143,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.LoginFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -156,7 +156,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.foodkapev.foodsharingrus.presentation.fragments.SignUpFragment"
+        android:name="com.foodkapev.foodsharingrus.ui.fragments.SignUpFragment"
         android:label="SignUpFragment" >
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"

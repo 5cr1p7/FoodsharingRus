@@ -2,14 +2,13 @@ package com.foodkapev.foodsharingrus
 
 import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.databinding.ActivityLoginBinding
-import com.foodkapev.foodsharingrus.domain.models.LoginUserParam
 import com.foodkapev.foodsharingrus.domain.usecase.LoginUseCase
-import com.foodkapev.foodsharingrus.presentation.activities.MainActivity
+import com.foodkapev.foodsharingrus.ui.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.adapters
+package com.foodkapev.foodsharingrus.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.domain.models.Comment
 import com.foodkapev.foodsharingrus.domain.models.User
-import com.foodkapev.foodsharingrus.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot

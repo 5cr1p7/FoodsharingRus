@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.adapters
+package com.foodkapev.foodsharingrus.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.domain.models.Notification
 import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.domain.models.User
-import com.foodkapev.foodsharingrus.presentation.fragments.NotificationsFragmentDirections
+import com.foodkapev.foodsharingrus.ui.fragments.NotificationsFragmentDirections
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

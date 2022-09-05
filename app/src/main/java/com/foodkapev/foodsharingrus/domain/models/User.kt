@@ -1,6 +1,6 @@
 package com.foodkapev.foodsharingrus.domain.models
 
-class User(
+data class User(
     var username: String = "",
     var fullname: String = "",
     var bio: String = "",

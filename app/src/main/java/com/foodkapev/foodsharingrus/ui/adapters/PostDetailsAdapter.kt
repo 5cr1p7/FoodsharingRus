@@ -1,5 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.adapters
-
+package com.foodkapev.foodsharingrus.ui.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -13,22 +12,24 @@ import com.bumptech.glide.Glide
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.domain.models.Post
 import com.foodkapev.foodsharingrus.domain.models.User
-import com.foodkapev.foodsharingrus.presentation.fragments.HomeFragmentDirections
+import com.foodkapev.foodsharingrus.ui.fragments.PostDetailsFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import de.hdodenhof.circleimageview.CircleImageView
+import timber.log.Timber
 
-class HomePostsAdapter(private val mContext: Context,
-                       private val mPost: List<Post>): RecyclerView.Adapter<HomePostsAdapter.ViewHolder>() {
+class PostDetailsAdapter(private val mContext: Context,
+                         private val mPost: List<Post>): RecyclerView.Adapter<PostDetailsAdapter.ViewHolder>() {
 
     private var firebaseUser: FirebaseUser? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mContext)
-            .inflate(R.layout.posts_layout, parent, false)
+            .inflate(R.layout.particular_post_layout, parent, false)
         return ViewHolder(view)
     }
 
@@ -43,43 +44,24 @@ class HomePostsAdapter(private val mContext: Context,
 
         Glide.with(mContext).load(post.postImage).into(holder.postImage)
 
-        holder.postImage.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToPostDetailsFragment(post.postId)
-            Navigation.findNavController(holder.itemView).navigate(action)
+        if (post.description == "") {
+            holder.description.visibility = View.GONE
         }
-
-
+        else {
+            holder.description.visibility = View.VISIBLE
+            holder.description.text = post.description
+        }
 
         holder.title.text = post.title
 
-        if (post.time != "")
-            holder.time.text = post.time
-        else
-            holder.time.text = ""
+        publisherInfo(holder.profileImage, holder.userName, post.publisher)
 
-        holder.location.text = post.location
-
-        publisherInfo(post.publisher)
-
+        holder.commentBtn.setOnClickListener {
+            val action = PostDetailsFragmentDirections.actionPostDetailsFragmentToCommentsFragment(post.postId, post.publisher)
+            Navigation.findNavController(holder.itemView).navigate(action)
+        }
     }
 
-    private fun numberOfLikes(likes: TextView, postId: String) {
-        val likesRef = FirebaseDatabase.getInstance().reference
-            .child("Likes")
-            .child(postId)
-
-        likesRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    likes.text = dataSnapshot.childrenCount.toString() + " likes"
-                }
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-        })
-    }
 
     private fun numberOfComments(comments: TextView, postId: String) {
         val commentsRef = FirebaseDatabase.getInstance().reference
@@ -89,32 +71,7 @@ class HomePostsAdapter(private val mContext: Context,
         commentsRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    comments.text = "View all " + dataSnapshot.childrenCount.toString() + " comments"
-                }
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-        })
-    }
-
-    private fun isLikes(postId: String, likeBtn: ImageView) {
-        val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        val likesRef = FirebaseDatabase.getInstance().reference
-            .child("Likes")
-            .child(postId)
-
-        likesRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.child(firebaseUser!!.uid).exists()) {
-                    likeBtn.setImageResource(R.drawable.heart_clicked)
-                    likeBtn.tag = "Liked"
-                }
-                else {
-                    likeBtn.setImageResource(R.drawable.heart)
-                    likeBtn.tag = "Like"
+                    comments.text = "Посмотреть все " + dataSnapshot.childrenCount.toString() + " комментариев"
                 }
             }
 
@@ -125,13 +82,17 @@ class HomePostsAdapter(private val mContext: Context,
     }
 
     inner class ViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
-        var postImage: ImageView = itemView.findViewById(R.id.post_image_home)
-        var title: TextView = itemView.findViewById(R.id.post_title_home)
-        var time: TextView = itemView.findViewById(R.id.offer_time_home)
-        var location: TextView = itemView.findViewById(R.id.post_location_home)
+        var profileImage: CircleImageView = itemView.findViewById(R.id.user_profile_image_post_details)
+        var postImage: ImageView = itemView.findViewById(R.id.post_image_home_details)
+        var commentBtn: ImageView = itemView.findViewById(R.id.post_image_comment_btn_details)
+        var userName: TextView = itemView.findViewById(R.id.user_name_post_details)
+        var description: TextView = itemView.findViewById(R.id.description)
+        var title: TextView = itemView.findViewById(R.id.title_post_details)
     }
 
     private fun publisherInfo(
+        profileImage: CircleImageView,
+        userName: TextView,
         publisherId: String
     ) {
         val usersRef = FirebaseDatabase.getInstance().reference
@@ -143,8 +104,10 @@ class HomePostsAdapter(private val mContext: Context,
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue(User::class.java)
 
-//                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.profile).into(profileImage)
-//                    userName.text = user.getUsername()
+//                    Picasso.get().load(user!!.image).placeholder(R.drawable.profile).into(profileImage)
+                    Timber.d(user?.image)
+                    Glide.with(mContext).load(user?.image).placeholder(R.drawable.profile).into(profileImage)
+                    userName.text = user?.username
 //                    publisher.text = user.getFullname()
 
                 }

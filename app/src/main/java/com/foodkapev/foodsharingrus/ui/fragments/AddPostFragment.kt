@@ -1,5 +1,6 @@
-package com.foodkapev.foodsharingrus.presentation.fragments
+package com.foodkapev.foodsharingrus.ui.fragments
 
+import android.Manifest
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
@@ -9,12 +10,13 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.databinding.FragmentAddPostBinding
-import com.foodkapev.foodsharingrus.presentation.activities.MainActivity
+import com.foodkapev.foodsharingrus.ui.activities.MainActivity
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +28,7 @@ import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
+
 
 class AddPostFragment: Fragment(R.layout.fragment_add_post) {
 
@@ -40,13 +42,30 @@ class AddPostFragment: Fragment(R.layout.fragment_add_post) {
 
         storageAddPostPicRef = FirebaseStorage.getInstance().reference.child("Posts Pictures")
 
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    CropImage.activity().start(requireContext(), this@AddPostFragment)
+                } else {
+                }
+            }
         with(binding) {
             saveNewPostBtn.setOnClickListener { uploadImage() }
 
             closeAddPostBtn.setOnClickListener { findNavController().popBackStack() } // back btn
 
             imagePost.setOnClickListener {
-                CropImage.activity().start(requireContext(), this@AddPostFragment)
+                if (shouldShowRequestPermissionRationale(
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                ) {
+                    Toast.makeText(requireContext(), "Необходимо разрешение", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
             }
 
 //        val json = assets.open("cities.json").bufferedReader().readText()

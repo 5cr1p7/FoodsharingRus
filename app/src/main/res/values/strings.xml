@@ -38,6 +38,8 @@
     <string name="profile_fragment_btn_edit_profile">Edit profile</string>
     <string name="profile_fragment_text_offers">Предложения</string>
     <string name="search_fragment_hint_search">Поиск</string>
+    <string name="profile_fragment_follow">Подписаться</string>
+    <string name="profile_fragment_following">Вы подписаны</string>
 
 
 </resources>

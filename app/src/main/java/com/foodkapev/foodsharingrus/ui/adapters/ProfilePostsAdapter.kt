@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.adapters
+package com.foodkapev.foodsharingrus.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.domain.models.Post
-import com.foodkapev.foodsharingrus.presentation.fragments.ProfileFragmentDirections
+import com.foodkapev.foodsharingrus.ui.fragments.ProfileFragmentDirections
 
 class ProfilePostsAdapter(private val mContext: Context, private val mPost: List<Post>)
     : RecyclerView.Adapter<ProfilePostsAdapter.ViewHolder?>() {

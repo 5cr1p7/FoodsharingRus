@@ -1,4 +1,4 @@
-package com.foodkapev.foodsharingrus.presentation.fragments
+package com.foodkapev.foodsharingrus.ui.fragments
 
 import android.os.Bundle
 import android.view.View
@@ -10,8 +10,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.foodkapev.foodsharingrus.R
 import com.foodkapev.foodsharingrus.databinding.FragmentSearchBinding
 import com.foodkapev.foodsharingrus.domain.models.Post
-import com.foodkapev.foodsharingrus.presentation.adapters.SearchPostAdapter
-import com.foodkapev.foodsharingrus.presentation.viewmodels.SearchViewModel
+import com.foodkapev.foodsharingrus.ui.adapters.SearchPostAdapter
+import com.foodkapev.foodsharingrus.ui.viewmodels.SearchViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

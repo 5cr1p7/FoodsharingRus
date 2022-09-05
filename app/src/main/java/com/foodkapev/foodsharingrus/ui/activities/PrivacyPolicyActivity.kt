@@ -1,7 +1,7 @@
-package com.foodkapev.foodsharingrus.presentation.activities
+package com.foodkapev.foodsharingrus.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.foodkapev.foodsharingrus.R
 
 class PrivacyPolicyActivity : AppCompatActivity() {
