@@ -1,4 +1,6 @@
 # FoodsharingRus
+<h3>The actual code is  stored on develop branch.</h3>
+
 Android application for Foodsharing movement in Russia
 
 Written using:
